@@ -1,0 +1,13 @@
+node_modules
+.next
+dist
+.env
+.venv
+__pycache__
+*.pyc
+coverage
+prisma/dev.db
+*.log
+tmp-*.log
+*.tsbuildinfo
+packages/database/generated/
