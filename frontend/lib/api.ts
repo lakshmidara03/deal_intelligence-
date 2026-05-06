@@ -22,6 +22,22 @@ export const api = {
   deals: (accountId?: string) => request<Deal[]>(`/deals${accountId ? `?accountId=${accountId}` : ''}`),
   deal: (id: string) => request<Deal>(`/deals/${id}`),
   activities: (id: string) => request<Activity[]>(`/deals/${id}/activities`),
+  createEmailActivity: (
+    id: string,
+    payload: {
+      title: string;
+      summary: string;
+      rawText: string;
+      occurredAt: string;
+    }
+  ) =>
+    request<Deal>(`/deals/${id}/activities`, {
+      method: 'POST',
+      body: JSON.stringify({
+        ...payload,
+        type: 'EMAIL'
+      })
+    }),
   insights: (id: string) => request<DealInsight[]>(`/deals/${id}/insights`),
   analyze: (id: string) =>
     request<Deal>(`/deals/${id}/analyze`, {

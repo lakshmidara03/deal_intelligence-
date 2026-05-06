@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AnalyzeDealDto } from './dto/analyze-deal.dto';
+import { CreateActivityDto } from './dto/create-activity.dto';
 import { DealsService } from './deals.service';
 
 @ApiTags('deals')
@@ -21,6 +22,11 @@ export class DealsController {
   @Get(':id/activities')
   findActivities(@Param('id') id: string) {
     return this.dealsService.findActivities(id);
+  }
+
+  @Post(':id/activities')
+  createActivity(@Param('id') id: string, @Body() dto: CreateActivityDto) {
+    return this.dealsService.createActivity(id, dto);
   }
 
   @Get(':id/insights')

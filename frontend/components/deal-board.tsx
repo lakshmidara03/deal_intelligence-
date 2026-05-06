@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { ArrowUpRight, LogOut, RefreshCcw, Search } from 'lucide-react';
+import { ArrowUpRight, BarChart3, LogOut, RefreshCcw, Search } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -24,6 +24,8 @@ export function DealBoard({ adminView = false }: { adminView?: boolean }) {
     enabled: hasHydrated && Boolean(account)
   });
   const [lastRefreshedAt, setLastRefreshedAt] = useState<Date | null>(null);
+  const [showStatistics, setShowStatistics] = useState(false);
+  const [selectedStatsDealId, setSelectedStatsDealId] = useState<string>('');
   const { healthFilter, searchTerm, riskCategory, setHealthFilter, setSearchTerm, setRiskCategory } = useDealViewStore();
 
   const deals = useMemo(() => {
@@ -42,6 +44,96 @@ export function DealBoard({ adminView = false }: { adminView?: boolean }) {
       return matchesHealth && matchesRiskCategory && matchesSearch;
     });
   }, [data, healthFilter, riskCategory, searchTerm]);
+
+  const healthSummary = useMemo(() => {
+    const sourceDeals = data ?? [];
+    const healthy = sourceDeals.filter((deal) => deal.health === 'HEALTHY').length;
+    const atRisk = sourceDeals.filter((deal) => deal.health === 'AT_RISK').length;
+    const needsReview = sourceDeals.filter((deal) => deal.health === 'NEEDS_REVIEW').length;
+    const total = sourceDeals.length;
+
+    return {
+      total,
+      items: [
+        {
+          label: 'Healthy',
+          value: healthy,
+          color: 'bg-emerald-500',
+          text: 'text-emerald-800',
+          border: 'border-emerald-200',
+          background: 'bg-emerald-50'
+        },
+        {
+          label: 'At Risk',
+          value: atRisk,
+          color: 'bg-coral',
+          text: 'text-red-800',
+          border: 'border-red-200',
+          background: 'bg-red-50'
+        },
+        {
+          label: 'Needs Review',
+          value: needsReview,
+          color: 'bg-gold',
+          text: 'text-amber-900',
+          border: 'border-amber-200',
+          background: 'bg-amber-50'
+        }
+      ]
+    };
+  }, [data]);
+
+  const selectedStatsDeal = useMemo(() => {
+    const sourceDeals = data ?? [];
+    return sourceDeals.find((deal) => deal.id === selectedStatsDealId) ?? sourceDeals[0];
+  }, [data, selectedStatsDealId]);
+
+  const selectedDealBreakdown = useMemo(() => {
+    if (!selectedStatsDeal) {
+      return [
+        { label: 'Healthy', value: 0, color: '#10b981' },
+        { label: 'At Risk', value: 0, color: '#ef6f5e' },
+        { label: 'Needs Review', value: 0, color: '#d9a72f' }
+      ];
+    }
+
+    const drivers = selectedStatsDeal.drivers ?? [];
+    const positive = drivers.filter((driver) => driver.impact === 'POSITIVE').length;
+    const negative = drivers.filter((driver) => driver.impact === 'NEGATIVE').length;
+    const neutral = drivers.filter((driver) => driver.impact === 'NEUTRAL').length;
+    const totalSignals = Math.max(positive + negative + neutral, 1);
+
+    let healthy = Math.round((positive / totalSignals) * 100);
+    let atRisk = Math.round((negative / totalSignals) * 100);
+    let needsReview = Math.max(0, 100 - healthy - atRisk);
+
+    if (drivers.length === 0) {
+      healthy = selectedStatsDeal.health === 'HEALTHY' ? 100 : 0;
+      atRisk = selectedStatsDeal.health === 'AT_RISK' ? 100 : 0;
+      needsReview = selectedStatsDeal.health === 'NEEDS_REVIEW' ? 100 : 0;
+    }
+
+    return [
+      { label: 'Healthy', value: healthy, color: '#10b981' },
+      { label: 'At Risk', value: atRisk, color: '#ef6f5e' },
+      { label: 'Needs Review', value: needsReview, color: '#d9a72f' }
+    ];
+  }, [selectedStatsDeal]);
+
+  const donutSegments = useMemo(() => {
+    let offset = 25;
+    const circumference = 75;
+
+    return selectedDealBreakdown.map((item) => {
+      const segment = {
+        ...item,
+        dashArray: `${(item.value / 100) * circumference} ${circumference}`,
+        dashOffset: offset
+      };
+      offset -= (item.value / 100) * circumference;
+      return segment;
+    });
+  }, [selectedDealBreakdown]);
 
   async function handleRefresh() {
     await refetch();
@@ -76,8 +168,7 @@ export function DealBoard({ adminView = false }: { adminView?: boolean }) {
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-6 py-6">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <p className="text-sm font-semibold text-coral">Project 4 POC</p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-normal text-ink">
+              <h1 className="text-3xl font-semibold tracking-normal text-ink">
                 {adminView ? 'Admin Deal Dashboard' : 'Deal Intelligence Workspace'}
               </h1>
               <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-600">
@@ -127,15 +218,30 @@ export function DealBoard({ adminView = false }: { adminView?: boolean }) {
               {filters.map((filter) => (
                 <button
                   className={`rounded-md border px-3 py-2 text-sm font-medium ${
-                    healthFilter === filter ? 'border-ink bg-ink text-white' : 'border-line bg-white text-zinc-700 hover:bg-paper'
+                    !showStatistics && healthFilter === filter
+                      ? 'border-ink bg-ink text-white'
+                      : 'border-line bg-white text-zinc-700 hover:bg-paper'
                   }`}
                   key={filter}
-                  onClick={() => setHealthFilter(filter)}
+                  onClick={() => {
+                    setShowStatistics(false);
+                    setHealthFilter(filter);
+                  }}
                   type="button"
                 >
                   {filter === 'ALL' ? 'All Deals' : label(filter)}
                 </button>
               ))}
+              <button
+                className={`inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium ${
+                  showStatistics ? 'border-ink bg-ink text-white' : 'border-line bg-white text-zinc-700 hover:bg-paper'
+                }`}
+                onClick={() => setShowStatistics(true)}
+                type="button"
+              >
+                <BarChart3 className="h-4 w-4" aria-hidden="true" />
+                Statistics
+              </button>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
               <label className="flex h-10 min-w-72 items-center gap-2 rounded-md border border-line bg-white px-3 text-sm text-zinc-500">
@@ -171,6 +277,122 @@ export function DealBoard({ adminView = false }: { adminView?: boolean }) {
       <section className="mx-auto max-w-7xl px-6 py-6">
         {isLoading && <p className="text-sm text-zinc-600">Loading deals...</p>}
         {isError && <p className="text-sm text-red-700">Could not load deals. Check that the NestJS API is running.</p>}
+
+        {showStatistics ? (
+          <div className="mb-6 rounded-md border border-line bg-white p-5">
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+              <div>
+                <h2 className="text-base font-semibold text-ink">Deal Statistics</h2>
+                <p className="mt-1 text-sm text-zinc-600">Select one deal to view its health breakdown.</p>
+              </div>
+              <label className="block min-w-80 text-sm font-medium text-ink">
+                Deal
+                <select
+                  className="mt-2 h-10 w-full rounded-md border border-line bg-white px-3 text-sm outline-none focus:border-ink"
+                  onChange={(event) => setSelectedStatsDealId(event.target.value)}
+                  value={selectedStatsDeal?.id ?? ''}
+                >
+                  {(data ?? []).map((deal) => (
+                    <option key={deal.id} value={deal.id}>
+                      {deal.name} - {deal.company}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            {selectedStatsDeal && (
+              <div className="mt-6 grid gap-6 lg:grid-cols-[280px_1fr] lg:items-center">
+                <div className="flex justify-center">
+                  <svg className="h-56 w-56 -rotate-90" viewBox="0 0 42 42" role="img" aria-label="Selected deal health doughnut chart">
+                    <circle cx="21" cy="21" fill="transparent" r="15.915" stroke="#f1eee6" strokeWidth="7" />
+                    {donutSegments.map((segment) => (
+                      <circle
+                        cx="21"
+                        cy="21"
+                        fill="transparent"
+                        key={segment.label}
+                        r="15.915"
+                        stroke={segment.color}
+                        strokeDasharray={segment.dashArray}
+                        strokeDashoffset={segment.dashOffset}
+                        strokeLinecap="round"
+                        strokeWidth="7"
+                      >
+                        <title>
+                          {segment.label}: {segment.value}%
+                        </title>
+                      </circle>
+                    ))}
+                    <text
+                      className="rotate-90 fill-ink text-[0.22rem] font-semibold"
+                      textAnchor="middle"
+                      x="21"
+                      y="-19.5"
+                    >
+                      {selectedStatsDeal.health.replace('_', ' ')}
+                    </text>
+                  </svg>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-ink">{selectedStatsDeal.name}</h3>
+                  <p className="mt-1 text-sm text-zinc-600">{selectedStatsDeal.company}</p>
+                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                    {selectedDealBreakdown.map((item) => (
+                      <div className="rounded-md border border-line bg-paper p-3" key={item.label} title={`${item.label}: ${item.value}%`}>
+                        <div className="flex items-center gap-2">
+                          <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
+                          <span className="text-sm font-semibold text-ink">{item.label}</span>
+                        </div>
+                        <p className="mt-2 text-2xl font-semibold text-ink">{item.value}%</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-zinc-600">
+                    This chart uses only the selected deal's current health and AI driver impacts.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+
+        {healthFilter === 'ALL' && (
+        <div className="mb-6 rounded-md border border-line bg-white p-5">
+          <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
+            <div>
+              <h2 className="text-base font-semibold text-ink">Deal Health Overview</h2>
+              <p className="mt-1 text-sm text-zinc-600">
+                {healthSummary.total} total deals in this {adminView ? 'admin' : 'employee'} view
+              </p>
+            </div>
+            <div className="text-sm font-semibold text-zinc-600">
+              Healthy vs Risk vs Review
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {healthSummary.items.map((item) => {
+              const percent = healthSummary.total > 0 ? Math.round((item.value / healthSummary.total) * 100) : 0;
+
+              return (
+                <div className={`rounded-md border ${item.border} ${item.background} p-4`} key={item.label}>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className={`text-sm font-semibold ${item.text}`}>{item.label}</span>
+                    <span className={`text-2xl font-semibold ${item.text}`}>{item.value}</span>
+                  </div>
+                  <div className="mt-3 h-3 overflow-hidden rounded-full bg-white">
+                    <div className={`h-full rounded-full ${item.color}`} style={{ width: `${percent}%` }} />
+                  </div>
+                  <p className="mt-2 text-xs font-medium text-zinc-600">{percent}% of deals</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        )}
 
         <div className="overflow-hidden rounded-md border border-line bg-white">
           <div className="grid grid-cols-[1.3fr_0.8fr_0.8fr_0.7fr_0.8fr_0.7fr_44px] border-b border-line bg-paper px-4 py-3 text-xs font-semibold uppercase text-zinc-500">
@@ -209,6 +431,8 @@ export function DealBoard({ adminView = false }: { adminView?: boolean }) {
             <div className="px-4 py-8 text-sm text-zinc-600">No deals match the current search and health filter.</div>
           )}
         </div>
+          </>
+        )}
       </section>
     </main>
   );

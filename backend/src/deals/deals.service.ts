@@ -1,10 +1,11 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { DealHealth, DriverImpact } from '../../../packages/database/generated/client';
+import { ActivityType, DealHealth, DriverImpact } from '../../../packages/database/generated/client';
 import { firstValueFrom } from 'rxjs';
 import { PrismaService } from '../prisma/prisma.service';
 import { AnalyzeDealDto } from './dto/analyze-deal.dto';
+import { CreateActivityDto } from './dto/create-activity.dto';
 
 type AiAnalysis = {
   health: DealHealth;
@@ -86,6 +87,23 @@ export class DealsService {
     });
   }
 
+  async createActivity(id: string, dto: CreateActivityDto) {
+    await this.ensureDeal(id);
+
+    await this.prisma.activity.create({
+      data: {
+        dealId: id,
+        type: ActivityType.EMAIL,
+        title: dto.title,
+        summary: dto.summary,
+        rawText: dto.rawText,
+        occurredAt: new Date(dto.occurredAt)
+      }
+    });
+
+    return this.findOne(id);
+  }
+
   async findInsights(id: string) {
     await this.ensureDeal(id);
     return this.prisma.dealInsight.findMany({
@@ -152,39 +170,92 @@ export class DealsService {
   }
 
   private fallbackAnalysis(deal: Awaited<ReturnType<DealsService['findOne']>>): AiAnalysis {
-    const hasCompetitor = deal.activities.some((activity) =>
-      activity.rawText.toLowerCase().includes('competitor') || activity.rawText.toLowerCase().includes('northstar')
-    );
-    const hasNextStepMissing = deal.activities.some((activity) => activity.rawText.toLowerCase().includes('next step'));
+    const activityText = deal.activities
+      .map((activity) => `${activity.title} ${activity.summary} ${activity.rawText}`)
+      .join(' ')
+      .toLowerCase();
+
+    const hasCompetitor = activityText.includes('competitor') || activityText.includes('northstar') || activityText.includes('another vendor');
+    const hasNextStepMissing = activityText.includes('next step') || activityText.includes('not scheduled');
+    const hasPricingConcern = activityText.includes('pricing') || activityText.includes('price') || activityText.includes('discount');
+    const hasNoRecentActivity = activityText.includes('no reply') || activityText.includes('no response') || activityText.includes('quiet');
+    const hasDecisionMakerMissing = activityText.includes('decision-maker') || activityText.includes('economic buyer');
 
     const drivers = [
-      {
-        label: hasCompetitor ? 'Competitor Mention' : 'No Competitor Signal',
-        description: hasCompetitor ? 'A competitor appears in the recent deal context.' : 'No direct competitor risk was found.',
-        impact: hasCompetitor ? DriverImpact.NEGATIVE : DriverImpact.POSITIVE
-      },
-      {
-        label: hasNextStepMissing ? 'Next Step Missing' : 'Next Step Present',
-        description: hasNextStepMissing ? 'The next customer action is not clearly scheduled.' : 'The activity context includes a clear next step.',
-        impact: hasNextStepMissing ? DriverImpact.NEGATIVE : DriverImpact.POSITIVE
-      }
+      ...(hasCompetitor
+        ? [
+            {
+              label: 'Competitor Mention',
+              description: 'A competitor appears in the recent deal context.',
+              impact: DriverImpact.NEGATIVE
+            }
+          ]
+        : []),
+      ...(hasNextStepMissing
+        ? [
+            {
+              label: 'Next Step Missing',
+              description: 'The next customer action is not clearly scheduled.',
+              impact: DriverImpact.NEGATIVE
+            }
+          ]
+        : []),
+      ...(hasPricingConcern
+        ? [
+            {
+              label: 'Pricing Concern',
+              description: 'Recent activity contains pricing, discount, or budget concern signals.',
+              impact: DriverImpact.NEGATIVE
+            }
+          ]
+        : []),
+      ...(hasNoRecentActivity
+        ? [
+            {
+              label: 'No Recent Activity',
+              description: 'The customer has not responded after a recent touch.',
+              impact: DriverImpact.NEGATIVE
+            }
+          ]
+        : []),
+      ...(hasDecisionMakerMissing
+        ? [
+            {
+              label: 'Decision-Maker Unknown',
+              description: 'The economic buyer or decision owner is not clearly identified.',
+              impact: DriverImpact.NEGATIVE
+            }
+          ]
+        : []),
+      ...(!hasCompetitor && !hasNextStepMissing && !hasPricingConcern && !hasNoRecentActivity && !hasDecisionMakerMissing
+        ? [
+            {
+              label: 'Positive Engagement',
+              description: 'No major risk signal was found in the latest activity context.',
+              impact: DriverImpact.POSITIVE
+            }
+          ]
+        : [])
     ];
 
-    const health = hasCompetitor || hasNextStepMissing ? DealHealth.AT_RISK : DealHealth.HEALTHY;
+    const health =
+      hasCompetitor || hasNextStepMissing || hasPricingConcern || hasNoRecentActivity || hasDecisionMakerMissing
+        ? DealHealth.AT_RISK
+        : DealHealth.HEALTHY;
 
     return {
       health,
-      confidence: hasCompetitor || hasNextStepMissing ? 'High' : 'Medium',
+      confidence: health === DealHealth.AT_RISK ? 'High' : 'Medium',
       healthExplanation:
         health === DealHealth.AT_RISK
           ? 'The deal needs attention because recent activity contains risk signals.'
           : 'The deal looks healthy based on recent engagement signals.',
       recommendedAction:
         health === DealHealth.AT_RISK
-          ? 'Confirm the next meeting and address the main buyer concern before the deal stalls.'
+          ? 'Review the risk drivers, follow up with the customer, and confirm the next committed action.'
           : 'Keep momentum by confirming decision criteria and timeline.',
       insightSummary: `${deal.company} was analyzed using ${deal.activities.length} recent activities.`,
-      interpretation: 'This fallback analysis uses simple keyword and activity checks when the AI service is unavailable.',
+      interpretation: 'This analysis reviewed all saved activity text for competitor, pricing, reply, decision-maker, and next-step signals.',
       drivers
     };
   }
