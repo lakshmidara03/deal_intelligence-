@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 28% 98%;
+  --foreground: 215 35% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 35% 12%;
+  --muted: 210 24% 94%;
+  --muted-foreground: 215 12% 42%;
+  --primary: 190 92% 34%;
+  --primary-foreground: 0 0% 100%;
+  --destructive: 0 72% 52%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 22% 88%;
+  --input: 214 22% 88%;
+  --ring: 190 92% 34%;
+}
+
+.dark {
+  --background: 215 33% 7%;
+  --foreground: 210 32% 96%;
+  --card: 216 28% 11%;
+  --card-foreground: 210 32% 96%;
+  --muted: 216 24% 16%;
+  --muted-foreground: 214 14% 68%;
+  --primary: 183 76% 45%;
+  --primary-foreground: 215 33% 7%;
+  --destructive: 2 76% 56%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 216 20% 20%;
+  --input: 216 20% 20%;
+  --ring: 183 76% 45%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.16), transparent 32rem),
+    radial-gradient(circle at 85% 10%, rgba(244, 114, 182, 0.12), transparent 26rem),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.glass-panel {
+  background: color-mix(in srgb, hsl(var(--card)) 82%, transparent);
+  backdrop-filter: blur(22px);
+  border: 1px solid color-mix(in srgb, hsl(var(--border)) 74%, transparent);
+}

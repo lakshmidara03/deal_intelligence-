@@ -1,0 +1,19 @@
+
+> deal-intelligence-frontend@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.10.36:3000
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+Creating turbopack project {
+  dir: 'C:\\Users\\Relanto\\OneDrive - Relanto\\Desktop\\DEAL_intillegence\\deal-intelligence-platform\\frontend',
+  testMode: true
+}
+ ✓ Ready in 1774ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 10.8s
+ GET /dashboard 200 in 12893ms

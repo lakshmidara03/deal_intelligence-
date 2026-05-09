@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "INT-DL-00001-1",
+    "deal_id": "DL-00001",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-04-11"
+  },
+  {
+    "id": "INT-DL-00001-2",
+    "deal_id": "DL-00001",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "negative",
+    "created_at": "2025-08-15"
+  },
+  {
+    "id": "INT-DL-00001-3",
+    "deal_id": "DL-00001",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Salesforce.",
+    "sentiment": "negative",
+    "created_at": "2025-08-15"
+  },
+  {
+    "id": "INT-DL-00001-4",
+    "deal_id": "DL-00001",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "positive",
+    "created_at": "2025-09-28"
+  },
+  {
+    "id": "INT-DL-00002-1",
+    "deal_id": "DL-00002",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for Analytics Pro evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-08-10"
+  },
+  {
+    "id": "INT-DL-00002-2",
+    "deal_id": "DL-00002",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-03"
+  },
+  {
+    "id": "INT-DL-00002-3",
+    "deal_id": "DL-00002",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Oracle.",
+    "sentiment": "positive",
+    "created_at": "2026-02-03"
+  },
+  {
+    "id": "INT-DL-00002-4",
+    "deal_id": "DL-00002",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2026-03-11"
+  },
+  {
+    "id": "INT-DL-00003-1",
+    "deal_id": "DL-00003",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-05-31"
+  },
+  {
+    "id": "INT-DL-00003-2",
+    "deal_id": "DL-00003",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "neutral",
+    "created_at": "2025-08-23"
+  },
+  {
+    "id": "INT-DL-00003-3",
+    "deal_id": "DL-00003",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2025-08-23"
+  },
+  {
+    "id": "INT-DL-00003-4",
+    "deal_id": "DL-00003",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "negative",
+    "created_at": "2025-11-02"
+  },
+  {
+    "id": "INT-DL-00004-1",
+    "deal_id": "DL-00004",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-10-18"
+  },
+  {
+    "id": "INT-DL-00004-2",
+    "deal_id": "DL-00004",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "neutral",
+    "created_at": "2025-12-14"
+  },
+  {
+    "id": "INT-DL-00004-3",
+    "deal_id": "DL-00004",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2025-12-14"
+  },
+  {
+    "id": "INT-DL-00004-4",
+    "deal_id": "DL-00004",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2026-05-21"
+  },
+  {
+    "id": "INT-DL-00005-1",
+    "deal_id": "DL-00005",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for Analytics Pro evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-12-18"
+  },
+  {
+    "id": "INT-DL-00005-2",
+    "deal_id": "DL-00005",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Lost and current probability 0%.",
+    "sentiment": "neutral",
+    "created_at": "2026-01-15"
+  },
+  {
+    "id": "INT-DL-00005-3",
+    "deal_id": "DL-00005",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and HubSpot.",
+    "sentiment": "positive",
+    "created_at": "2026-01-15"
+  },
+  {
+    "id": "INT-DL-00005-4",
+    "deal_id": "DL-00005",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "negative",
+    "created_at": "2026-10-03"
+  },
+  {
+    "id": "INT-DL-00006-1",
+    "deal_id": "DL-00006",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for Analytics Pro evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-10-26"
+  },
+  {
+    "id": "INT-DL-00006-2",
+    "deal_id": "DL-00006",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "positive",
+    "created_at": "2026-03-14"
+  },
+  {
+    "id": "INT-DL-00006-3",
+    "deal_id": "DL-00006",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Salesforce and Microsoft Dynamics.",
+    "sentiment": "negative",
+    "created_at": "2026-03-14"
+  },
+  {
+    "id": "INT-DL-00006-4",
+    "deal_id": "DL-00006",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "negative",
+    "created_at": "2026-03-13"
+  },
+  {
+    "id": "INT-DL-00007-1",
+    "deal_id": "DL-00007",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for Analytics Pro evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-12-05"
+  },
+  {
+    "id": "INT-DL-00007-2",
+    "deal_id": "DL-00007",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-06"
+  },
+  {
+    "id": "INT-DL-00007-3",
+    "deal_id": "DL-00007",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Zoho CRM and SAP.",
+    "sentiment": "negative",
+    "created_at": "2026-02-06"
+  },
+  {
+    "id": "INT-DL-00007-4",
+    "deal_id": "DL-00007",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2026-09-03"
+  },
+  {
+    "id": "INT-DL-00008-1",
+    "deal_id": "DL-00008",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-26"
+  },
+  {
+    "id": "INT-DL-00008-2",
+    "deal_id": "DL-00008",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2026-03-20"
+  },
+  {
+    "id": "INT-DL-00008-3",
+    "deal_id": "DL-00008",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Salesforce and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2026-03-20"
+  },
+  {
+    "id": "INT-DL-00008-4",
+    "deal_id": "DL-00008",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2026-07-27"
+  },
+  {
+    "id": "INT-DL-00009-1",
+    "deal_id": "DL-00009",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-04-30"
+  },
+  {
+    "id": "INT-DL-00009-2",
+    "deal_id": "DL-00009",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Lost and current probability 0%.",
+    "sentiment": "negative",
+    "created_at": "2025-06-05"
+  },
+  {
+    "id": "INT-DL-00009-3",
+    "deal_id": "DL-00009",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Zoho CRM.",
+    "sentiment": "negative",
+    "created_at": "2025-06-05"
+  },
+  {
+    "id": "INT-DL-00009-4",
+    "deal_id": "DL-00009",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "positive",
+    "created_at": "2025-09-02"
+  },
+  {
+    "id": "INT-DL-00010-1",
+    "deal_id": "DL-00010",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-04-28"
+  },
+  {
+    "id": "INT-DL-00010-2",
+    "deal_id": "DL-00010",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Lost and current probability 0%.",
+    "sentiment": "negative",
+    "created_at": "2026-01-13"
+  },
+  {
+    "id": "INT-DL-00010-3",
+    "deal_id": "DL-00010",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Microsoft Dynamics and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2026-01-13"
+  },
+  {
+    "id": "INT-DL-00010-4",
+    "deal_id": "DL-00010",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2025-09-14"
+  },
+  {
+    "id": "INT-DL-00011-1",
+    "deal_id": "DL-00011",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for DataBridge evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-08-25"
+  },
+  {
+    "id": "INT-DL-00011-2",
+    "deal_id": "DL-00011",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "negative",
+    "created_at": "2025-09-06"
+  },
+  {
+    "id": "INT-DL-00011-3",
+    "deal_id": "DL-00011",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Salesforce and SAP.",
+    "sentiment": "negative",
+    "created_at": "2025-09-06"
+  },
+  {
+    "id": "INT-DL-00011-4",
+    "deal_id": "DL-00011",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "negative",
+    "created_at": "2026-02-12"
+  },
+  {
+    "id": "INT-DL-00012-1",
+    "deal_id": "DL-00012",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for HRConnect evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-01-29"
+  },
+  {
+    "id": "INT-DL-00012-2",
+    "deal_id": "DL-00012",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2026-04-19"
+  },
+  {
+    "id": "INT-DL-00012-3",
+    "deal_id": "DL-00012",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Microsoft Dynamics and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2026-04-19"
+  },
+  {
+    "id": "INT-DL-00012-4",
+    "deal_id": "DL-00012",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "positive",
+    "created_at": "2026-09-24"
+  },
+  {
+    "id": "INT-DL-00013-1",
+    "deal_id": "DL-00013",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for DataBridge evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-26"
+  },
+  {
+    "id": "INT-DL-00013-2",
+    "deal_id": "DL-00013",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "positive",
+    "created_at": "2026-04-12"
+  },
+  {
+    "id": "INT-DL-00013-3",
+    "deal_id": "DL-00013",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Microsoft Dynamics and SAP.",
+    "sentiment": "negative",
+    "created_at": "2026-04-12"
+  },
+  {
+    "id": "INT-DL-00013-4",
+    "deal_id": "DL-00013",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2026-08-17"
+  },
+  {
+    "id": "INT-DL-00014-1",
+    "deal_id": "DL-00014",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-04-27"
+  },
+  {
+    "id": "INT-DL-00014-2",
+    "deal_id": "DL-00014",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "negative",
+    "created_at": "2026-03-13"
+  },
+  {
+    "id": "INT-DL-00014-3",
+    "deal_id": "DL-00014",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and SAP.",
+    "sentiment": "negative",
+    "created_at": "2026-03-13"
+  },
+  {
+    "id": "INT-DL-00014-4",
+    "deal_id": "DL-00014",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2025-11-12"
+  },
+  {
+    "id": "INT-DL-00015-1",
+    "deal_id": "DL-00015",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for ERP Cloud evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-03"
+  },
+  {
+    "id": "INT-DL-00015-2",
+    "deal_id": "DL-00015",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "positive",
+    "created_at": "2026-04-29"
+  },
+  {
+    "id": "INT-DL-00015-3",
+    "deal_id": "DL-00015",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2026-04-29"
+  },
+  {
+    "id": "INT-DL-00015-4",
+    "deal_id": "DL-00015",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "negative",
+    "created_at": "2026-05-30"
+  },
+  {
+    "id": "INT-DL-00016-1",
+    "deal_id": "DL-00016",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for HRConnect evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-10-09"
+  },
+  {
+    "id": "INT-DL-00016-2",
+    "deal_id": "DL-00016",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "negative",
+    "created_at": "2026-02-03"
+  },
+  {
+    "id": "INT-DL-00016-3",
+    "deal_id": "DL-00016",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Microsoft Dynamics.",
+    "sentiment": "positive",
+    "created_at": "2026-02-03"
+  },
+  {
+    "id": "INT-DL-00016-4",
+    "deal_id": "DL-00016",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2026-01-09"
+  },
+  {
+    "id": "INT-DL-00017-1",
+    "deal_id": "DL-00017",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-05-24"
+  },
+  {
+    "id": "INT-DL-00017-2",
+    "deal_id": "DL-00017",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "negative",
+    "created_at": "2025-08-11"
+  },
+  {
+    "id": "INT-DL-00017-3",
+    "deal_id": "DL-00017",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Unknown.",
+    "sentiment": "negative",
+    "created_at": "2025-08-11"
+  },
+  {
+    "id": "INT-DL-00017-4",
+    "deal_id": "DL-00017",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "positive",
+    "created_at": "2026-01-05"
+  },
+  {
+    "id": "INT-DL-00018-1",
+    "deal_id": "DL-00018",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for HRConnect evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-10"
+  },
+  {
+    "id": "INT-DL-00018-2",
+    "deal_id": "DL-00018",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2026-04-02"
+  },
+  {
+    "id": "INT-DL-00018-3",
+    "deal_id": "DL-00018",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Salesforce.",
+    "sentiment": "positive",
+    "created_at": "2026-04-02"
+  },
+  {
+    "id": "INT-DL-00018-4",
+    "deal_id": "DL-00018",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "negative",
+    "created_at": "2026-03-25"
+  },
+  {
+    "id": "INT-DL-00019-1",
+    "deal_id": "DL-00019",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-20"
+  },
+  {
+    "id": "INT-DL-00019-2",
+    "deal_id": "DL-00019",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-23"
+  },
+  {
+    "id": "INT-DL-00019-3",
+    "deal_id": "DL-00019",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Microsoft Dynamics and HubSpot.",
+    "sentiment": "negative",
+    "created_at": "2026-02-23"
+  },
+  {
+    "id": "INT-DL-00019-4",
+    "deal_id": "DL-00019",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2026-07-02"
+  },
+  {
+    "id": "INT-DL-00020-1",
+    "deal_id": "DL-00020",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-12-30"
+  },
+  {
+    "id": "INT-DL-00020-2",
+    "deal_id": "DL-00020",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2026-03-29"
+  },
+  {
+    "id": "INT-DL-00020-3",
+    "deal_id": "DL-00020",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2026-03-29"
+  },
+  {
+    "id": "INT-DL-00020-4",
+    "deal_id": "DL-00020",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2026-02-19"
+  },
+  {
+    "id": "INT-DL-00021-1",
+    "deal_id": "DL-00021",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for ERP Cloud evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-09-18"
+  },
+  {
+    "id": "INT-DL-00021-2",
+    "deal_id": "DL-00021",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Qualification and current probability 25%.",
+    "sentiment": "negative",
+    "created_at": "2025-11-04"
+  },
+  {
+    "id": "INT-DL-00021-3",
+    "deal_id": "DL-00021",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors HubSpot and SAP.",
+    "sentiment": "negative",
+    "created_at": "2025-11-04"
+  },
+  {
+    "id": "INT-DL-00021-4",
+    "deal_id": "DL-00021",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "positive",
+    "created_at": "2026-04-02"
+  },
+  {
+    "id": "INT-DL-00022-1",
+    "deal_id": "DL-00022",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-03-08"
+  },
+  {
+    "id": "INT-DL-00022-2",
+    "deal_id": "DL-00022",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Qualification and current probability 25%.",
+    "sentiment": "neutral",
+    "created_at": "2026-03-31"
+  },
+  {
+    "id": "INT-DL-00022-3",
+    "deal_id": "DL-00022",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Oracle and Zoho CRM.",
+    "sentiment": "negative",
+    "created_at": "2026-03-31"
+  },
+  {
+    "id": "INT-DL-00022-4",
+    "deal_id": "DL-00022",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2026-09-23"
+  },
+  {
+    "id": "INT-DL-00023-1",
+    "deal_id": "DL-00023",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for HRConnect evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-05-16"
+  },
+  {
+    "id": "INT-DL-00023-2",
+    "deal_id": "DL-00023",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "neutral",
+    "created_at": "2025-07-08"
+  },
+  {
+    "id": "INT-DL-00023-3",
+    "deal_id": "DL-00023",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors HubSpot and Unknown.",
+    "sentiment": "negative",
+    "created_at": "2025-07-08"
+  },
+  {
+    "id": "INT-DL-00023-4",
+    "deal_id": "DL-00023",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "negative",
+    "created_at": "2026-02-21"
+  },
+  {
+    "id": "INT-DL-00024-1",
+    "deal_id": "DL-00024",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for DataBridge evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-03-06"
+  },
+  {
+    "id": "INT-DL-00024-2",
+    "deal_id": "DL-00024",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "positive",
+    "created_at": "2026-04-12"
+  },
+  {
+    "id": "INT-DL-00024-3",
+    "deal_id": "DL-00024",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Microsoft Dynamics and SAP.",
+    "sentiment": "negative",
+    "created_at": "2026-04-12"
+  },
+  {
+    "id": "INT-DL-00024-4",
+    "deal_id": "DL-00024",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "positive",
+    "created_at": "2026-09-08"
+  },
+  {
+    "id": "INT-DL-00025-1",
+    "deal_id": "DL-00025",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for DataBridge evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-14"
+  },
+  {
+    "id": "INT-DL-00025-2",
+    "deal_id": "DL-00025",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "positive",
+    "created_at": "2026-03-01"
+  },
+  {
+    "id": "INT-DL-00025-3",
+    "deal_id": "DL-00025",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Salesforce and Unknown.",
+    "sentiment": "negative",
+    "created_at": "2026-03-01"
+  },
+  {
+    "id": "INT-DL-00025-4",
+    "deal_id": "DL-00025",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2026-10-19"
+  },
+  {
+    "id": "INT-DL-00026-1",
+    "deal_id": "DL-00026",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for ERP Cloud evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-04-10"
+  },
+  {
+    "id": "INT-DL-00026-2",
+    "deal_id": "DL-00026",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "negative",
+    "created_at": "2026-01-31"
+  },
+  {
+    "id": "INT-DL-00026-3",
+    "deal_id": "DL-00026",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Salesforce.",
+    "sentiment": "negative",
+    "created_at": "2026-01-31"
+  },
+  {
+    "id": "INT-DL-00026-4",
+    "deal_id": "DL-00026",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2025-09-24"
+  },
+  {
+    "id": "INT-DL-00027-1",
+    "deal_id": "DL-00027",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for Analytics Pro evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-04-03"
+  },
+  {
+    "id": "INT-DL-00027-2",
+    "deal_id": "DL-00027",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2025-11-01"
+  },
+  {
+    "id": "INT-DL-00027-3",
+    "deal_id": "DL-00027",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Salesforce and Unknown.",
+    "sentiment": "negative",
+    "created_at": "2025-11-01"
+  },
+  {
+    "id": "INT-DL-00027-4",
+    "deal_id": "DL-00027",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "positive",
+    "created_at": "2025-12-25"
+  },
+  {
+    "id": "INT-DL-00028-1",
+    "deal_id": "DL-00028",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-07-05"
+  },
+  {
+    "id": "INT-DL-00028-2",
+    "deal_id": "DL-00028",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "neutral",
+    "created_at": "2026-03-04"
+  },
+  {
+    "id": "INT-DL-00028-3",
+    "deal_id": "DL-00028",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Oracle.",
+    "sentiment": "positive",
+    "created_at": "2026-03-04"
+  },
+  {
+    "id": "INT-DL-00028-4",
+    "deal_id": "DL-00028",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2026-04-08"
+  },
+  {
+    "id": "INT-DL-00029-1",
+    "deal_id": "DL-00029",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for ERP Cloud evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-06-21"
+  },
+  {
+    "id": "INT-DL-00029-2",
+    "deal_id": "DL-00029",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "negative",
+    "created_at": "2025-07-14"
+  },
+  {
+    "id": "INT-DL-00029-3",
+    "deal_id": "DL-00029",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Zoho CRM.",
+    "sentiment": "negative",
+    "created_at": "2025-07-14"
+  },
+  {
+    "id": "INT-DL-00029-4",
+    "deal_id": "DL-00029",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "negative",
+    "created_at": "2026-02-16"
+  },
+  {
+    "id": "INT-DL-00030-1",
+    "deal_id": "DL-00030",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-01-20"
+  },
+  {
+    "id": "INT-DL-00030-2",
+    "deal_id": "DL-00030",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2026-03-02"
+  },
+  {
+    "id": "INT-DL-00030-3",
+    "deal_id": "DL-00030",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Oracle and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2026-03-02"
+  },
+  {
+    "id": "INT-DL-00030-4",
+    "deal_id": "DL-00030",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "negative",
+    "created_at": "2026-09-01"
+  },
+  {
+    "id": "INT-DL-00031-1",
+    "deal_id": "DL-00031",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-01-24"
+  },
+  {
+    "id": "INT-DL-00031-2",
+    "deal_id": "DL-00031",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "negative",
+    "created_at": "2026-03-29"
+  },
+  {
+    "id": "INT-DL-00031-3",
+    "deal_id": "DL-00031",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2026-03-29"
+  },
+  {
+    "id": "INT-DL-00031-4",
+    "deal_id": "DL-00031",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2026-06-26"
+  },
+  {
+    "id": "INT-DL-00032-1",
+    "deal_id": "DL-00032",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-11-13"
+  },
+  {
+    "id": "INT-DL-00032-2",
+    "deal_id": "DL-00032",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Lost and current probability 0%.",
+    "sentiment": "negative",
+    "created_at": "2025-11-16"
+  },
+  {
+    "id": "INT-DL-00032-3",
+    "deal_id": "DL-00032",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Salesforce and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2025-11-16"
+  },
+  {
+    "id": "INT-DL-00032-4",
+    "deal_id": "DL-00032",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2026-05-02"
+  },
+  {
+    "id": "INT-DL-00033-1",
+    "deal_id": "DL-00033",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-08-05"
+  },
+  {
+    "id": "INT-DL-00033-2",
+    "deal_id": "DL-00033",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "negative",
+    "created_at": "2025-12-23"
+  },
+  {
+    "id": "INT-DL-00033-3",
+    "deal_id": "DL-00033",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors HubSpot and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2025-12-23"
+  },
+  {
+    "id": "INT-DL-00033-4",
+    "deal_id": "DL-00033",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "negative",
+    "created_at": "2026-05-18"
+  },
+  {
+    "id": "INT-DL-00034-1",
+    "deal_id": "DL-00034",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for DataBridge evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-06-21"
+  },
+  {
+    "id": "INT-DL-00034-2",
+    "deal_id": "DL-00034",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "neutral",
+    "created_at": "2026-05-05"
+  },
+  {
+    "id": "INT-DL-00034-3",
+    "deal_id": "DL-00034",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Oracle and Unknown.",
+    "sentiment": "negative",
+    "created_at": "2026-05-05"
+  },
+  {
+    "id": "INT-DL-00034-4",
+    "deal_id": "DL-00034",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2025-08-02"
+  },
+  {
+    "id": "INT-DL-00035-1",
+    "deal_id": "DL-00035",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-07-07"
+  },
+  {
+    "id": "INT-DL-00035-2",
+    "deal_id": "DL-00035",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Lost and current probability 0%.",
+    "sentiment": "neutral",
+    "created_at": "2025-10-27"
+  },
+  {
+    "id": "INT-DL-00035-3",
+    "deal_id": "DL-00035",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Microsoft Dynamics and HubSpot.",
+    "sentiment": "negative",
+    "created_at": "2025-10-27"
+  },
+  {
+    "id": "INT-DL-00035-4",
+    "deal_id": "DL-00035",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "negative",
+    "created_at": "2026-02-11"
+  },
+  {
+    "id": "INT-DL-00036-1",
+    "deal_id": "DL-00036",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-01-20"
+  },
+  {
+    "id": "INT-DL-00036-2",
+    "deal_id": "DL-00036",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "positive",
+    "created_at": "2026-02-06"
+  },
+  {
+    "id": "INT-DL-00036-3",
+    "deal_id": "DL-00036",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Oracle and HubSpot.",
+    "sentiment": "negative",
+    "created_at": "2026-02-06"
+  },
+  {
+    "id": "INT-DL-00036-4",
+    "deal_id": "DL-00036",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "negative",
+    "created_at": "2026-05-04"
+  },
+  {
+    "id": "INT-DL-00037-1",
+    "deal_id": "DL-00037",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-11-08"
+  },
+  {
+    "id": "INT-DL-00037-2",
+    "deal_id": "DL-00037",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Qualification and current probability 25%.",
+    "sentiment": "positive",
+    "created_at": "2025-11-24"
+  },
+  {
+    "id": "INT-DL-00037-3",
+    "deal_id": "DL-00037",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2025-11-24"
+  },
+  {
+    "id": "INT-DL-00037-4",
+    "deal_id": "DL-00037",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2025-12-23"
+  },
+  {
+    "id": "INT-DL-00038-1",
+    "deal_id": "DL-00038",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-06-15"
+  },
+  {
+    "id": "INT-DL-00038-2",
+    "deal_id": "DL-00038",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "neutral",
+    "created_at": "2025-10-10"
+  },
+  {
+    "id": "INT-DL-00038-3",
+    "deal_id": "DL-00038",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Salesforce and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2025-10-10"
+  },
+  {
+    "id": "INT-DL-00038-4",
+    "deal_id": "DL-00038",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2026-03-03"
+  },
+  {
+    "id": "INT-DL-00039-1",
+    "deal_id": "DL-00039",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-10-16"
+  },
+  {
+    "id": "INT-DL-00039-2",
+    "deal_id": "DL-00039",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "positive",
+    "created_at": "2025-11-25"
+  },
+  {
+    "id": "INT-DL-00039-3",
+    "deal_id": "DL-00039",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and HubSpot.",
+    "sentiment": "negative",
+    "created_at": "2025-11-25"
+  },
+  {
+    "id": "INT-DL-00039-4",
+    "deal_id": "DL-00039",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "negative",
+    "created_at": "2026-03-03"
+  },
+  {
+    "id": "INT-DL-00040-1",
+    "deal_id": "DL-00040",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for HRConnect evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-05-26"
+  },
+  {
+    "id": "INT-DL-00040-2",
+    "deal_id": "DL-00040",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "negative",
+    "created_at": "2025-11-09"
+  },
+  {
+    "id": "INT-DL-00040-3",
+    "deal_id": "DL-00040",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors HubSpot and SAP.",
+    "sentiment": "negative",
+    "created_at": "2025-11-09"
+  },
+  {
+    "id": "INT-DL-00040-4",
+    "deal_id": "DL-00040",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2025-12-01"
+  },
+  {
+    "id": "INT-DL-00041-1",
+    "deal_id": "DL-00041",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for HRConnect evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-07-14"
+  },
+  {
+    "id": "INT-DL-00041-2",
+    "deal_id": "DL-00041",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "positive",
+    "created_at": "2025-09-23"
+  },
+  {
+    "id": "INT-DL-00041-3",
+    "deal_id": "DL-00041",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2025-09-23"
+  },
+  {
+    "id": "INT-DL-00041-4",
+    "deal_id": "DL-00041",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "negative",
+    "created_at": "2025-11-29"
+  },
+  {
+    "id": "INT-DL-00042-1",
+    "deal_id": "DL-00042",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for AI Assistant evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-10"
+  },
+  {
+    "id": "INT-DL-00042-2",
+    "deal_id": "DL-00042",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "neutral",
+    "created_at": "2026-04-07"
+  },
+  {
+    "id": "INT-DL-00042-3",
+    "deal_id": "DL-00042",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Zoho CRM and Microsoft Dynamics.",
+    "sentiment": "negative",
+    "created_at": "2026-04-07"
+  },
+  {
+    "id": "INT-DL-00042-4",
+    "deal_id": "DL-00042",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "positive",
+    "created_at": "2026-04-26"
+  },
+  {
+    "id": "INT-DL-00043-1",
+    "deal_id": "DL-00043",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-12-22"
+  },
+  {
+    "id": "INT-DL-00043-2",
+    "deal_id": "DL-00043",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Qualification and current probability 25%.",
+    "sentiment": "negative",
+    "created_at": "2026-04-20"
+  },
+  {
+    "id": "INT-DL-00043-3",
+    "deal_id": "DL-00043",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2026-04-20"
+  },
+  {
+    "id": "INT-DL-00043-4",
+    "deal_id": "DL-00043",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2026-09-30"
+  },
+  {
+    "id": "INT-DL-00044-1",
+    "deal_id": "DL-00044",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for Analytics Pro evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-09-22"
+  },
+  {
+    "id": "INT-DL-00044-2",
+    "deal_id": "DL-00044",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Negotiation and current probability 70%.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-18"
+  },
+  {
+    "id": "INT-DL-00044-3",
+    "deal_id": "DL-00044",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2026-02-18"
+  },
+  {
+    "id": "INT-DL-00044-4",
+    "deal_id": "DL-00044",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2026-06-15"
+  },
+  {
+    "id": "INT-DL-00045-1",
+    "deal_id": "DL-00045",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for DataBridge evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-11-20"
+  },
+  {
+    "id": "INT-DL-00045-2",
+    "deal_id": "DL-00045",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Won and current probability 100%.",
+    "sentiment": "positive",
+    "created_at": "2026-05-01"
+  },
+  {
+    "id": "INT-DL-00045-3",
+    "deal_id": "DL-00045",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Unknown and Oracle.",
+    "sentiment": "negative",
+    "created_at": "2026-05-01"
+  },
+  {
+    "id": "INT-DL-00045-4",
+    "deal_id": "DL-00045",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: book executive meeting with decision maker and sales manager.",
+    "sentiment": "negative",
+    "created_at": "2026-01-15"
+  },
+  {
+    "id": "INT-DL-00046-1",
+    "deal_id": "DL-00046",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for Analytics Pro evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-06-03"
+  },
+  {
+    "id": "INT-DL-00046-2",
+    "deal_id": "DL-00046",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Proposal and current probability 50%.",
+    "sentiment": "neutral",
+    "created_at": "2025-11-25"
+  },
+  {
+    "id": "INT-DL-00046-3",
+    "deal_id": "DL-00046",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Zoho CRM and Unknown.",
+    "sentiment": "positive",
+    "created_at": "2025-11-25"
+  },
+  {
+    "id": "INT-DL-00046-4",
+    "deal_id": "DL-00046",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send roi summary email with implementation plan and risk mitigations.",
+    "sentiment": "negative",
+    "created_at": "2025-10-20"
+  },
+  {
+    "id": "INT-DL-00047-1",
+    "deal_id": "DL-00047",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for CRM Suite evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-06-23"
+  },
+  {
+    "id": "INT-DL-00047-2",
+    "deal_id": "DL-00047",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Qualification and current probability 25%.",
+    "sentiment": "neutral",
+    "created_at": "2025-10-01"
+  },
+  {
+    "id": "INT-DL-00047-3",
+    "deal_id": "DL-00047",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors Zoho CRM and SAP.",
+    "sentiment": "negative",
+    "created_at": "2025-10-01"
+  },
+  {
+    "id": "INT-DL-00047-4",
+    "deal_id": "DL-00047",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: run procurement follow-up call and confirm legal/security blockers.",
+    "sentiment": "negative",
+    "created_at": "2026-03-20"
+  },
+  {
+    "id": "INT-DL-00048-1",
+    "deal_id": "DL-00048",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for DataBridge evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-13"
+  },
+  {
+    "id": "INT-DL-00048-2",
+    "deal_id": "DL-00048",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Closed Lost and current probability 0%.",
+    "sentiment": "neutral",
+    "created_at": "2026-02-20"
+  },
+  {
+    "id": "INT-DL-00048-3",
+    "deal_id": "DL-00048",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Microsoft Dynamics.",
+    "sentiment": "negative",
+    "created_at": "2026-02-20"
+  },
+  {
+    "id": "INT-DL-00048-4",
+    "deal_id": "DL-00048",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule technical validation meeting with product specialist.",
+    "sentiment": "negative",
+    "created_at": "2026-10-13"
+  },
+  {
+    "id": "INT-DL-00049-1",
+    "deal_id": "DL-00049",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for SecureVault evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-08-24"
+  },
+  {
+    "id": "INT-DL-00049-2",
+    "deal_id": "DL-00049",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Prospecting and current probability 10%.",
+    "sentiment": "neutral",
+    "created_at": "2025-09-26"
+  },
+  {
+    "id": "INT-DL-00049-3",
+    "deal_id": "DL-00049",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors HubSpot and Salesforce.",
+    "sentiment": "negative",
+    "created_at": "2025-09-26"
+  },
+  {
+    "id": "INT-DL-00049-4",
+    "deal_id": "DL-00049",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: send pricing clarification email to the buyer and confirm budget owner.",
+    "sentiment": "negative",
+    "created_at": "2026-05-15"
+  },
+  {
+    "id": "INT-DL-00050-1",
+    "deal_id": "DL-00050",
+    "channel": "email",
+    "actor": "Account executive",
+    "summary": "Initial outreach email sent for HRConnect evaluation.",
+    "sentiment": "neutral",
+    "created_at": "2025-12-08"
+  },
+  {
+    "id": "INT-DL-00050-2",
+    "deal_id": "DL-00050",
+    "channel": "call",
+    "actor": "Buyer team",
+    "summary": "Discovery call covered stage Qualification and current probability 25%.",
+    "sentiment": "positive",
+    "created_at": "2026-05-06"
+  },
+  {
+    "id": "INT-DL-00050-3",
+    "deal_id": "DL-00050",
+    "channel": "meeting",
+    "actor": "Decision committee",
+    "summary": "Meeting discussed competitors SAP and Unknown.",
+    "sentiment": "negative",
+    "created_at": "2026-05-06"
+  },
+  {
+    "id": "INT-DL-00050-4",
+    "deal_id": "DL-00050",
+    "channel": "call",
+    "actor": "Sales manager",
+    "summary": "Close-plan review: schedule champion call to validate business pain and buying timeline.",
+    "sentiment": "negative",
+    "created_at": "2026-03-01"
+  }
+]

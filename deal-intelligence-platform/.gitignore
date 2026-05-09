@@ -1,0 +1,12 @@
+node_modules/
+.next/
+dist/
+build/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.local
+ml/models/*.pkl
+ml/models/*.json
+!.env.example
