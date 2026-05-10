@@ -3,6 +3,7 @@ import "server-only";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Deal, Interaction } from "@/types/deal";
+import type { CompetitorRadarData } from "@/types/competitor";
 
 const dataDir = join(process.cwd(), "data");
 const datasetDealsPath = join(dataDir, "deals.json");
@@ -99,3 +100,40 @@ export function addInteraction(input: Partial<Interaction> & { deal_id: string; 
   writeJson(createdInteractionsPath, [interaction, ...created]);
   return interaction;
 }
+
+export function getCompetitorData(dealId: string): CompetitorRadarData {
+  const deal = getDeal(dealId);
+  if (!deal) {
+    throw new Error(`Deal ${dealId} not found`);
+  }
+
+  // Use deal name length/characters to create deterministic "random" values
+  const seed = deal.name.length + deal.account.length;
+  
+  const generateScore = (base: number, variance: number, idx: number) => {
+    return Math.min(100, Math.max(30, base + ((seed * idx) % variance) - (variance / 2)));
+  };
+
+  const rivals = [
+    ["Salesforce", "HubSpot"],
+    ["Gong", "Chorus.ai"],
+    ["Outreach", "Salesloft"],
+    ["Zendesk", "Intercom"]
+  ];
+  const rivalPair = rivals[seed % rivals.length];
+
+  return {
+    dealId: deal.id,
+    rivalAName: rivalPair[0],
+    rivalBName: rivalPair[1],
+    data: [
+      { dimension: "Pricing strength", you: generateScore(80, 20, 1), rivalA: generateScore(75, 30, 2), rivalB: generateScore(65, 25, 3), fullMark: 100 },
+      { dimension: "Relationship depth", you: generateScore(85, 15, 4), rivalA: generateScore(60, 40, 5), rivalB: generateScore(70, 30, 6), fullMark: 100 },
+      { dimension: "Product fit", you: generateScore(90, 10, 7), rivalA: generateScore(80, 20, 8), rivalB: generateScore(68, 30, 9), fullMark: 100 },
+      { dimension: "Support quality", you: generateScore(75, 25, 10), rivalA: generateScore(85, 15, 11), rivalB: generateScore(75, 20, 12), fullMark: 100 },
+      { dimension: "Integration ease", you: generateScore(82, 18, 13), rivalA: generateScore(65, 35, 14), rivalB: generateScore(88, 12, 15), fullMark: 100 },
+      { dimension: "Deal momentum", you: deal.health_status === "Healthy" ? 90 : deal.health_status === "At Risk" ? 40 : 70, rivalA: generateScore(60, 30, 16), rivalB: generateScore(65, 20, 17), fullMark: 100 },
+    ],
+  };
+}
+
