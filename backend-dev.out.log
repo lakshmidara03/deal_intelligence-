@@ -1,0 +1,47 @@
+
+> @dealboards/api@0.1.0 start:dev
+> nest start --watch
+
+[2J[3J[H[[90m12:28:30 AM[0m] Starting compilation in watch mode...
+
+[[90m12:28:33 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +41ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBoardsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mActivitiesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWarningsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPlaybookModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDealsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAiModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCrmSyncModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatasetUploadModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +41ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/sales-rep, POST} route[39m[38;5;3m +4ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mBoardsController {/boards}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/boards, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDealsController {/deals}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/deals, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/deals/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/deals/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mActivitiesController {/deals/:id/activity}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/deals/:id/activity, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mWarningsController {/deals/:id/warnings}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/deals/:id/warnings, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPlaybookController {/deals/:id/playbook}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/deals/:id/playbook, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/deals/:id/playbook/:itemId, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAiController {/ai}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/ai/predict/:id, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCrmSyncController {/crm}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/crm/sync/:id, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDatasetUploadController {/dataset}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dataset/upload, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/dataset/load-local, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +89ms[39m
+[32m[Nest] 21144  - [39m05/19/2026, 12:28:35 AM [32m    LOG[39m [38;5;3m[DatasetUploadService] [39m[32mAuto-loading dataset from datasets/deal_intelligence_dataset_cleaned.xlsx[39m

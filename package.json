@@ -1,0 +1,38 @@
+{
+  "name": "m4-dealboards-salesrep",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:web": "npm --workspace frontend run dev",
+    "dev:api": "npm --workspace backend run start:dev",
+    "dev:ai": "cd services/ai && python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8001",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
+    "db:schema": "node backend/scripts/run-sql.mjs backend/db/schema.sql",
+    "db:migrate": "node backend/scripts/run-sql.mjs backend/db/migration.sql",
+    "db:import-excel": "node backend/scripts/import-excel-to-db.mjs datasets/deal_intelligence_dataset_cleaned.xlsx"
+  },
+  "workspaces": [
+    "frontend",
+    "backend",
+    "services/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.11.0",
+    "npm": ">=10.0.0"
+  },
+  "optionalDependencies": {
+    "@next/swc-darwin-arm64": "14.2.33",
+    "@next/swc-darwin-x64": "14.2.33",
+    "@next/swc-linux-arm64-gnu": "14.2.33",
+    "@next/swc-linux-arm64-musl": "14.2.33",
+    "@next/swc-linux-x64-gnu": "14.2.33",
+    "@next/swc-linux-x64-musl": "14.2.33",
+    "@next/swc-win32-arm64-msvc": "14.2.33",
+    "@next/swc-win32-ia32-msvc": "14.2.33",
+    "@next/swc-win32-x64-msvc": "14.2.33"
+  }
+}

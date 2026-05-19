@@ -1,0 +1,14 @@
+node_modules
+.next
+dist
+.env
+.env.local
+.venv
+__pycache__
+*.pyc
+services/ai/models/*.pkl
+services/ai/uploads/*
+!services/ai/uploads/.gitkeep
+dist
+backend/dist
+frontend/.next

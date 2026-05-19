@@ -1,0 +1,14 @@
+
+> @dealboards/web@0.1.0 dev
+> next dev -p 3000 -p 3002
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3002
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.5s
+ ○ Compiling /boards/my-deals ...
+ ✓ Compiled /boards/my-deals in 3.5s (1382 modules)
+ GET /boards/my-deals 200 in 3825ms
+ ✓ Compiled in 479ms (699 modules)
