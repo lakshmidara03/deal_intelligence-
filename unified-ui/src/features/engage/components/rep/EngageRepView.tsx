@@ -522,7 +522,7 @@ export default function EngageRepView() {
                 onBlur={e =>  { e.currentTarget.style.border = `1px solid ${C.border}`;  e.currentTarget.style.boxShadow = 'none'; }}
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="hidden">
               <span className="text-sm" style={{ color: C.grayText }}>Group By</span>
               <PickerSelect
                 value={groupBy}
@@ -530,7 +530,7 @@ export default function EngageRepView() {
                 options={['None', 'Flow', 'Step']}
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="hidden">
               <span className="text-sm" style={{ color: C.grayText }}>Sort By</span>
               <PickerSelect value="Due Date" onChange={() => {}} options={['Due Date', 'Priority', 'Activity']} />
             </div>
