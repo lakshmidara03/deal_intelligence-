@@ -11,7 +11,6 @@ type Role = 'manager' | 'rep' | null
 
 const REP_NAMES = [
   'Lakshmi Prasanna',
-  'Sujeevan Jayshanker',
   'Revenue Intelligence Demo',
 ] as const;
 

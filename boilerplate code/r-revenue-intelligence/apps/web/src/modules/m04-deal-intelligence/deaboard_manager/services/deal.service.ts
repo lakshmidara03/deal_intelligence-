@@ -37,7 +37,7 @@ export async function fetchDeals(): Promise<Deal[]> {
       ...deal,
       amount: deal.amountDisplay || deal.amount,
       owner: {
-        name: deal.ownerName || deal.owner?.name || 'Sujeevan Jayshanker',
+        name: deal.ownerName || deal.owner?.name || 'Lakshmi Prasanna',
         email: deal.ownerEmail || deal.owner?.email,
         initials: deal.owner?.initials || (deal.ownerName || 'UN').split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase(),
         color: deal.owner?.color || '#4f46e5',
