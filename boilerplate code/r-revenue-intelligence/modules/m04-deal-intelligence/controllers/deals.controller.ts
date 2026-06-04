@@ -529,7 +529,10 @@ export class DealsController {
   }
 
   @Get('boards/:boardId')
-  async getBoardDetail(@Param('boardId') boardId: string) {
+  async getBoardDetail(
+    @Param('boardId') boardId: string,
+    @Query('owner') owner?: string,
+  ) {
     try {
       const deals = await this.hubSpotService.getAllDeals();
       const enrichedDeals = await Promise.all(deals.map(d => this.enrichDealWithTranscriptMeddpicc(d)));
@@ -541,7 +544,12 @@ export class DealsController {
       }
 
       // Get deals for this board's pipeline
-      const boardDeals = enrichedDeals.filter(d => d.pipeline === board.pipeline);
+      let boardDeals = enrichedDeals.filter(d => d.pipeline === board.pipeline);
+
+      // Filter by owner/rep name if specified
+      if (owner) {
+        boardDeals = boardDeals.filter(d => d.ownerName === owner);
+      }
 
       return {
         success: true,
@@ -554,6 +562,9 @@ export class DealsController {
     } catch (error: any) {
       this.logger.warn('Failed to fetch board detail from HubSpot, using mock:', error?.message || error);
       const mockDetail = this.dealsService.getMockBoardDetail(boardId);
+      if (owner && mockDetail.deals) {
+        mockDetail.deals = mockDetail.deals.filter((d: any) => d.ownerName === owner);
+      }
       return {
         success: true,
         data: mockDetail,
@@ -564,7 +575,10 @@ export class DealsController {
   }
 
   @Get('boards/:boardId/deals')
-  async getDealsByBoard(@Param('boardId') boardId: string): Promise<ApiResponse<any[]>> {
+  async getDealsByBoard(
+    @Param('boardId') boardId: string,
+    @Query('owner') owner?: string,
+  ): Promise<ApiResponse<any[]>> {
     try {
       const deals = await this.hubSpotService.getAllDeals();
       const enrichedDeals = await Promise.all(deals.map(d => this.enrichDealWithTranscriptMeddpicc(d)));
@@ -575,7 +589,12 @@ export class DealsController {
         throw new Error('Board not found');
       }
 
-      const boardDeals = enrichedDeals.filter(d => d.pipeline === board.pipeline);
+      let boardDeals = enrichedDeals.filter(d => d.pipeline === board.pipeline);
+
+      // Filter by owner/rep name if specified
+      if (owner) {
+        boardDeals = boardDeals.filter(d => d.ownerName === owner);
+      }
 
       return {
         success: true,
@@ -584,7 +603,10 @@ export class DealsController {
       };
     } catch (error: any) {
       this.logger.warn('Failed to fetch deals from HubSpot, using mock:', error?.message || error);
-      const mockDeals = this.dealsService.getMockDeals(boardId);
+      let mockDeals = this.dealsService.getMockDeals(boardId);
+      if (owner) {
+        mockDeals = mockDeals.filter(d => d.ownerName === owner);
+      }
       return {
         success: true,
         data: mockDeals,

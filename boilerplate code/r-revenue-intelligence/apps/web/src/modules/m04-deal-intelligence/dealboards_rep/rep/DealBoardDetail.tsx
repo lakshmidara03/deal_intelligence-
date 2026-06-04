@@ -116,18 +116,11 @@ export default function DealBoardDetail({ onBack, repName }: DealBoardDetailProp
     const loadData = async () => {
       const [b, d] = await Promise.all([
         getBoardDetail(boardId),
-        getDeals(boardId),
+        getDeals(boardId, repName || undefined),
       ]);
 
       // Evaluate deals with AI engine before setting state
-      let evaluatedDeals = await evaluateDeals(d.data);
-
-      // Filter deals by rep name if specified
-      if (repName) {
-        evaluatedDeals = evaluatedDeals.filter(
-          (deal) => deal.assignedRep === repName
-        );
-      }
+      const evaluatedDeals = await evaluateDeals(d.data);
 
       const n = await getNotifications(repName || undefined);
 

@@ -110,10 +110,14 @@ export async function getBoardDetail(
  * grouping (by stage / by rep) are handled client-side.
  */
 export async function getDeals(
-  boardId: string
+  boardId: string,
+  owner?: string
 ): Promise<ApiFetchResult<Deal[]>> {
   try {
-    const res = await fetch(`${BASE_URL}/api/deals/boards/${boardId}/deals`);
+    const url = owner
+      ? `${BASE_URL}/api/deals/boards/${boardId}/deals?owner=${encodeURIComponent(owner)}`
+      : `${BASE_URL}/api/deals/boards/${boardId}/deals`;
+    const res = await fetch(url);
     if (!res.ok) throw new Error('Backend error');
     const json = await res.json();
     if (json.success) {
@@ -127,7 +131,11 @@ export async function getDeals(
     throw new Error('Invalid response');
   } catch (err) {
     console.warn('[getDeals] Backend failed, using mock:', err);
-    return { data: MOCK_DEALS[boardId] ?? MOCK_DEALS["board-1"], isMock: true };
+    let fallback = MOCK_DEALS[boardId] ?? MOCK_DEALS["board-1"];
+    if (owner) {
+      fallback = fallback.filter((d: any) => d.assignedRep === owner);
+    }
+    return { data: fallback, isMock: true };
   }
 }
 
