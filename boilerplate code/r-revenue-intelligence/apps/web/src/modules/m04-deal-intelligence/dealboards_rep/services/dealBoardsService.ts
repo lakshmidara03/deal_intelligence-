@@ -123,7 +123,7 @@ export async function getDeals(
     if (json.success) {
       const mapped = (json.data || []).map((deal: any) => ({
         ...deal,
-        assignedRep: deal.ownerName || deal.assignedRep || 'Unassigned',
+        assignedRep: deal.ownerName || deal.assignedRep || 'Sujeevan Jayshanker',
         assignedRepEmail: deal.ownerEmail || deal.assignedRepEmail,
       }));
       return { data: mapped, isMock: json.isMock || false };
