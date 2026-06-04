@@ -66,6 +66,7 @@ export interface TransformedDeal {
   createDate: string;
   ownerId: string;
   ownerName: string;
+  assignedRep: string;
   ownerEmail: string;
   owner: {
     name: string;

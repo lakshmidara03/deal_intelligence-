@@ -381,6 +381,7 @@ export class HubSpotService {
       createDate: props.createdate || deal.createdAt,
       ownerId: props.hubspot_owner_id || '',
       ownerName,
+      assignedRep: ownerName,
       ownerEmail,
       owner: {
         name: ownerName,
