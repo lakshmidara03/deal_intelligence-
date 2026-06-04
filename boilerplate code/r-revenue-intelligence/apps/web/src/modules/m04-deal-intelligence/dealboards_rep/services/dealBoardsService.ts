@@ -1,8 +1,9 @@
 // ============================================================
-// apiHandler.ts — All API calls (real data only, no mock fallback)
+// apiHandler.ts — All API calls with mock fallback
 // ============================================================
 
 import { DealBoard, BoardDetail, Deal, BriefData, Warning, PlaybookData, PlaybookCriterion, ActivityData, CrmFields, StageOptions, Notification, NotificationsResponse } from '../types/deal-boards.types';
+import { MOCK_DEAL_BOARDS, MOCK_BOARD_DETAIL, MOCK_DEALS, MOCK_BRIEF, MOCK_WARNINGS, MOCK_PLAYBOOK, MOCK_ACTIVITY, MOCK_CRM_FIELDS, MOCK_STAGE_OPTIONS, MOCK_NOTIFICATIONS } from '../mocks/deal-boards.mocks';
 
 // Re-export types so consumers only need to import from apiHandler
 export type {
@@ -29,82 +30,105 @@ const BASE_URL = ENV.API_BASE_URL;
 
 export interface ApiFetchResult<T> {
   data: T;
+  isMock: boolean;
 }
 
 /**
- * apiFetch — wraps fetch, throws on errors (no mock fallback).
+ * apiFetch — wraps fetch with automatic mock fallback.
  */
 export async function apiFetch<T>(
   endpoint: string,
+  fallbackData: T,
   options?: RequestInit
 ): Promise<ApiFetchResult<T>> {
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
-    headers: { "Content-Type": "application/json" },
-    ...options,
-  });
+  try {
+    const res = await fetch(`${BASE_URL}${endpoint}`, {
+      headers: { "Content-Type": "application/json" },
+      ...options,
+    });
 
-  if (!res.ok) {
-    throw new Error(`[apiFetch] ${endpoint} → HTTP ${res.status}`);
+    if (!res.ok) {
+      console.warn(`[apiFetch] ${endpoint} → HTTP ${res.status}. Using mock fallback.`);
+      return { data: fallbackData, isMock: true };
+    }
+
+    const json = await res.json();
+    const responseData = (json as any).data ?? json;
+    return { data: responseData as T, isMock: (json as any).isMock ?? false };
+  } catch (err) {
+    console.warn(`[apiFetch] ${endpoint} → fetch failed (${err}). Using mock fallback.`);
+    return { data: fallbackData, isMock: true };
   }
-
-  const json = await res.json();
-  const responseData = (json as any).data ?? json;
-  return { data: responseData as T };
 }
 
 // ─── GET Endpoints ────────────────────────────────────────────
 
 /**
  * GET /api/deals/boards
- * Returns all deal board cards from HubSpot.
+ * Returns all deal board cards from HubSpot (with mock fallback).
  */
 export async function getDealBoards(): Promise<ApiFetchResult<DealBoard[]>> {
-  const res = await fetch(`${BASE_URL}/api/deals/boards`);
-  if (!res.ok) throw new Error('Backend error');
-  const json = await res.json();
-  if (json.success) {
-    return { data: json.data };
+  try {
+    const res = await fetch(`${BASE_URL}/api/deals/boards`);
+    if (!res.ok) throw new Error('Backend error');
+    const json = await res.json();
+    if (json.success) {
+      return { data: json.data, isMock: json.isMock || false };
+    }
+    throw new Error('Invalid response');
+  } catch (err) {
+    console.warn('[getDealBoards] Backend failed, using mock:', err);
+    return { data: MOCK_DEAL_BOARDS, isMock: true };
   }
-  throw new Error('Invalid response');
 }
 
 /**
  * GET /api/deals/boards/:boardId
- * Returns board name, ownerTag, and summary cards from HubSpot.
+ * Returns board name, ownerTag, and summary cards from HubSpot (with mock fallback).
  */
 export async function getBoardDetail(
   boardId: string
 ): Promise<ApiFetchResult<BoardDetail>> {
-  const res = await fetch(`${BASE_URL}/api/deals/boards/${boardId}`);
-  if (!res.ok) throw new Error('Backend error');
-  const json = await res.json();
-  if (json.success) {
-    return { data: json.data };
+  try {
+    const res = await fetch(`${BASE_URL}/api/deals/boards/${boardId}`);
+    if (!res.ok) throw new Error('Backend error');
+    const json = await res.json();
+    if (json.success) {
+      return { data: json.data, isMock: json.isMock || false };
+    }
+    throw new Error('Invalid response');
+  } catch (err) {
+    console.warn('[getBoardDetail] Backend failed, using mock:', err);
+    return { data: MOCK_BOARD_DETAIL[boardId] ?? MOCK_BOARD_DETAIL["board-1"], isMock: true };
   }
-  throw new Error('Invalid response');
 }
 
 /**
  * GET /api/deals/boards/:boardId/deals
- * Returns ALL deals for the board from HubSpot.
+ * Returns ALL deals for the board from HubSpot (with mock fallback).
  * Filtering (stage, forecastCategory, amount range, closeDate) and
  * grouping (by stage / by rep) are handled client-side.
  */
 export async function getDeals(
   boardId: string
 ): Promise<ApiFetchResult<Deal[]>> {
-  const res = await fetch(`${BASE_URL}/api/deals/boards/${boardId}/deals`);
-  if (!res.ok) throw new Error('Backend error');
-  const json = await res.json();
-  if (json.success) {
-    const mapped = (json.data || []).map((deal: any) => ({
-      ...deal,
-      assignedRep: deal.ownerName || deal.assignedRep || 'Unassigned',
-      assignedRepEmail: deal.ownerEmail || deal.assignedRepEmail,
-    }));
-    return { data: mapped };
+  try {
+    const res = await fetch(`${BASE_URL}/api/deals/boards/${boardId}/deals`);
+    if (!res.ok) throw new Error('Backend error');
+    const json = await res.json();
+    if (json.success) {
+      const mapped = (json.data || []).map((deal: any) => ({
+        ...deal,
+        assignedRep: deal.ownerName || deal.assignedRep || 'Unassigned',
+        assignedRepEmail: deal.ownerEmail || deal.assignedRepEmail,
+      }));
+      return { data: mapped, isMock: json.isMock || false };
+    }
+    throw new Error('Invalid response');
+  } catch (err) {
+    console.warn('[getDeals] Backend failed, using mock:', err);
+    return { data: MOCK_DEALS[boardId] ?? MOCK_DEALS["board-1"], isMock: true };
   }
-  throw new Error('Invalid response');
 }
 
 /**
@@ -113,7 +137,7 @@ export async function getDeals(
  * last interaction, and key risks. Default tab on deal open.
  */
 export function getDealBrief(dealId: string): Promise<ApiFetchResult<BriefData>> {
-  return apiFetch<BriefData>(`/api/deals/${dealId}/brief`);
+  return apiFetch<BriefData>(`/api/deals/${dealId}/brief`, MOCK_BRIEF[dealId] ?? MOCK_BRIEF["deal-1"]);
 }
 
 /**
@@ -121,7 +145,7 @@ export function getDealBrief(dealId: string): Promise<ApiFetchResult<BriefData>>
  * Returns all AI warnings for a deal with severity and status.
  */
 export function getDealWarnings(dealId: string): Promise<ApiFetchResult<Warning[]>> {
-  return apiFetch<Warning[]>(`/api/deals/${dealId}/warnings`);
+  return apiFetch<Warning[]>(`/api/deals/${dealId}/warnings`, MOCK_WARNINGS[dealId] ?? []);
 }
 
 /**
@@ -130,7 +154,7 @@ export function getDealWarnings(dealId: string): Promise<ApiFetchResult<Warning[
  * AI-suggested notes per criterion.
  */
 export function getDealPlaybook(dealId: string): Promise<ApiFetchResult<PlaybookData>> {
-  return apiFetch<PlaybookData>(`/api/deals/${dealId}/playbook`);
+  return apiFetch<PlaybookData>(`/api/deals/${dealId}/playbook`, MOCK_PLAYBOOK[dealId] ?? MOCK_PLAYBOOK["deal-1"]);
 }
 
 /**
@@ -138,7 +162,7 @@ export function getDealPlaybook(dealId: string): Promise<ApiFetchResult<Playbook
  * Returns activity timeline with interaction counts and dated events.
  */
 export function getDealActivity(dealId: string): Promise<ApiFetchResult<ActivityData>> {
-  return apiFetch<ActivityData>(`/api/deals/${dealId}/activity`);
+  return apiFetch<ActivityData>(`/api/deals/${dealId}/activity`, MOCK_ACTIVITY[dealId] ?? MOCK_ACTIVITY["deal-1"]);
 }
 
 /**
@@ -146,7 +170,7 @@ export function getDealActivity(dealId: string): Promise<ApiFetchResult<Activity
  * Returns current editable CRM fields for the Update CRM tab.
  */
 export function getDealCrmFields(dealId: string): Promise<ApiFetchResult<CrmFields>> {
-  return apiFetch<CrmFields>(`/api/deals/${dealId}/crm-fields`);
+  return apiFetch<CrmFields>(`/api/deals/${dealId}/crm-fields`, MOCK_CRM_FIELDS[dealId] ?? MOCK_CRM_FIELDS["deal-1"]);
 }
 
 /**
@@ -155,7 +179,7 @@ export function getDealCrmFields(dealId: string): Promise<ApiFetchResult<CrmFiel
  * dropdowns in the Update CRM tab and filter panel.
  */
 export function getStageOptions(): Promise<ApiFetchResult<StageOptions>> {
-  return apiFetch<StageOptions>("/api/deals/stage-options");
+  return apiFetch<StageOptions>("/api/deals/stage-options", MOCK_STAGE_OPTIONS);
 }
 
 /**
@@ -166,10 +190,12 @@ export function getNotifications(repName?: string): Promise<ApiFetchResult<Notif
   const url = repName
     ? `/api/notifications?repName=${encodeURIComponent(repName)}`
     : "/api/notifications";
-  return apiFetch<NotificationsResponse>(url);
+  return apiFetch<NotificationsResponse>(url, MOCK_NOTIFICATIONS);
 }
 
 // ─── PATCH / POST Mutations ───────────────────────────────────
+// Mutations use optimistic mock responses on failure so the UI
+// doesn't break.
 
 /**
  * PATCH /api/deals/:dealId
@@ -180,13 +206,23 @@ export async function updateDeal(
   dealId: string,
   body: Partial<CrmFields>
 ): Promise<{ message: string; dealId: string; updatedFields: Partial<CrmFields>; status: string }> {
-  const res = await fetch(`${BASE_URL}/api/deals/${dealId}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/api/deals/${dealId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn(`[updateDeal] PATCH /api/deals/${dealId} failed (${err}). Returning optimistic mock.`);
+    return {
+      message: "Updated (mock — backend not yet connected)",
+      dealId,
+      updatedFields: body,
+      status: "ok",
+    };
+  }
 }
 
 /**
@@ -199,16 +235,25 @@ export async function updatePlaybookCriterion(
   criterionId: string,
   status: "Completed" | "Pending" | "N/A"
 ): Promise<{ message: string; criterionId: string; updatedStatus: string }> {
-  const res = await fetch(
-    `${BASE_URL}/api/deals/${dealId}/playbook/criteria/${criterionId}`,
-    {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    }
-  );
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
+  try {
+    const res = await fetch(
+      `${BASE_URL}/api/deals/${dealId}/playbook/criteria/${criterionId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn(`[updatePlaybookCriterion] failed (${err}). Returning optimistic mock.`);
+    return {
+      message: "Updated (mock — backend not yet connected)",
+      criterionId,
+      updatedStatus: status,
+    };
+  }
 }
 
 /**
@@ -220,16 +265,25 @@ export async function resolveWarning(
   dealId: string,
   warningId: string
 ): Promise<{ message: string; warningId: string; status: string }> {
-  const res = await fetch(
-    `${BASE_URL}/api/deals/${dealId}/warnings/${warningId}`,
-    {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "resolved" }),
-    }
-  );
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
+  try {
+    const res = await fetch(
+      `${BASE_URL}/api/deals/${dealId}/warnings/${warningId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "resolved" }),
+      }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn(`[resolveWarning] failed (${err}). Returning optimistic mock.`);
+    return {
+      message: "Resolved (mock — backend not yet connected)",
+      warningId,
+      status: "resolved",
+    };
+  }
 }
 
 /**
@@ -241,15 +295,24 @@ export async function triggerWarningAction(
   dealId: string,
   warningId: string
 ): Promise<{ message: string; actionTriggered: boolean; status: string }> {
-  const res = await fetch(
-    `${BASE_URL}/api/deals/${dealId}/warnings/${warningId}/action`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
+  try {
+    const res = await fetch(
+      `${BASE_URL}/api/deals/${dealId}/warnings/${warningId}/action`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn(`[triggerWarningAction] failed (${err}). Returning optimistic mock.`);
+    return {
+      message: "Action triggered (mock — backend not yet connected)",
+      actionTriggered: true,
+      status: "ok",
+    };
+  }
 }
 
 /**
@@ -261,15 +324,23 @@ export async function markAllNotificationsRead(repName?: string): Promise<{
   message: string;
   status: string;
 }> {
-  const url = repName
-    ? `${BASE_URL}/api/notifications/read-all?repName=${encodeURIComponent(repName)}`
-    : `${BASE_URL}/api/notifications/read-all`;
-  const res = await fetch(url, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return await res.json();
+  try {
+    const url = repName
+      ? `${BASE_URL}/api/notifications/read-all?repName=${encodeURIComponent(repName)}`
+      : `${BASE_URL}/api/notifications/read-all`;
+    const res = await fetch(url, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn(`[markAllNotificationsRead] failed (${err}). Returning optimistic mock.`);
+    return {
+      message: "All marked as read (mock — backend not yet connected)",
+      status: "ok",
+    };
+  }
 }
 
 

@@ -6,115 +6,142 @@ import type {
   DealTaskPayload,
   PipelineSummary,
 } from '../types/deal.types';
+import { MOCK_DEAL_DETAILS, MOCK_DEALS, MOCK_PIPELINE_SUMMARY } from '../mocks/deals.mock';
 
 // ─── GET /api/deals ───────────────────────────────────────────────────────
 
 export async function fetchDeals(): Promise<Deal[]> {
-  const res = await fetch(`${ENV.API_BASE_URL}/api/deals/all`, {
-    cache: 'no-store',
-  });
+  try {
+    const res = await fetch(`${ENV.API_BASE_URL}/api/deals/all`, {
+      cache: 'no-store',
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch deals: ${res.status}`);
+    if (!res.ok) {
+      console.error('[Manager] API returned error:', res.status);
+      throw new Error(`Failed to fetch deals: ${res.status}`);
+    }
+
+    const response = await res.json();
+    const data = response.data || response;
+
+    if (!Array.isArray(data)) {
+      console.warn('[Manager] API returned non-array data, using mock data', data);
+      return MOCK_DEALS;
+    }
+    if (data.length === 0) {
+      console.warn('[Manager] API returned empty deals, using mock data');
+      return MOCK_DEALS;
+    }
+
+    return data.map((deal: any) => ({
+      ...deal,
+      amount: deal.amountDisplay || deal.amount,
+      owner: {
+        name: deal.ownerName || deal.owner?.name || 'Unassigned',
+        email: deal.ownerEmail || deal.owner?.email,
+        initials: deal.owner?.initials || (deal.ownerName || 'UN').split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase(),
+        color: deal.owner?.color || '#4f46e5',
+      },
+    }));
+  } catch (error) {
+    console.error('[Manager] API failed, using mock deals:', error);
+    return MOCK_DEALS;
   }
-
-  const response = await res.json();
-  const data = response.data || response;
-
-  if (!Array.isArray(data)) {
-    throw new Error('API returned non-array data');
-  }
-
-  return data.map((deal: any) => ({
-    ...deal,
-    amount: deal.amountDisplay || deal.amount,
-    owner: {
-      name: deal.ownerName || deal.owner?.name || 'Unassigned',
-      email: deal.ownerEmail || deal.owner?.email,
-      initials: deal.owner?.initials || (deal.ownerName || 'UN').split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase(),
-      color: deal.owner?.color || '#4f46e5',
-    },
-  }));
 }
 
 // ─── GET /api/deals/pipeline-summary ──────────────────────────────────────
 
 export async function fetchPipelineSummary(): Promise<PipelineSummary[]> {
-  const res = await fetch(`${ENV.API_BASE_URL}/api/deals/pipeline-summary`, {
-    cache: 'no-store',
-  });
+  try {
+    const res = await fetch(`${ENV.API_BASE_URL}/api/deals/pipeline-summary`, {
+      cache: 'no-store',
+    });
 
-  if (!res.ok) throw new Error(`Failed to fetch pipeline summary: ${res.status}`);
+    if (!res.ok) throw new Error(`Failed to fetch pipeline summary: ${res.status}`);
 
-  const response = await res.json();
-  const data = response.data || response;
-  if (!Array.isArray(data)) throw new Error('Invalid pipeline summary response');
-  return data;
+    const response = await res.json();
+    const data = response.data || response;
+    if (!Array.isArray(data) || data.length === 0) {
+      return MOCK_PIPELINE_SUMMARY;
+    }
+    return data;
+  } catch (error) {
+    console.warn('API failed, using mock pipeline summary:', error);
+    return MOCK_PIPELINE_SUMMARY;
+  }
 }
 
 export async function fetchDealDetail(dealId: string): Promise<DealDetail> {
-  // Call individual endpoints that exist in the backend
-  const [briefRes, warningsRes, playbookRes, activityRes, crmRes] = await Promise.all([
-    fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/brief`, { cache: 'no-store' }),
-    fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/warnings`, { cache: 'no-store' }),
-    fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/playbook`, { cache: 'no-store' }),
-    fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/activity`, { cache: 'no-store' }),
-    fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/crm-fields`, { cache: 'no-store' }),
-  ]);
+  const fallbackDetail =
+    MOCK_DEAL_DETAILS.find((detail) => detail.dealId === dealId) ?? MOCK_DEAL_DETAILS[0];
 
-  const brief = briefRes.ok ? await briefRes.json().then((j: any) => j.data ?? j) : null;
-  const warnings = warningsRes.ok ? await warningsRes.json().then((j: any) => j.data ?? j) : [];
-  const playbook = playbookRes.ok ? await playbookRes.json().then((j: any) => j.data ?? j) : null;
-  const activity = activityRes.ok ? await activityRes.json().then((j: any) => j.data ?? j) : null;
-  const crm = crmRes.ok ? await crmRes.json().then((j: any) => j.data ?? j) : null;
+  try {
+    // Call individual endpoints that exist in the backend
+    const [briefRes, warningsRes, playbookRes, activityRes, crmRes] = await Promise.all([
+      fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/brief`, { cache: 'no-store' }),
+      fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/warnings`, { cache: 'no-store' }),
+      fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/playbook`, { cache: 'no-store' }),
+      fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/activity`, { cache: 'no-store' }),
+      fetch(`${ENV.API_BASE_URL}/api/deals/${dealId}/crm-fields`, { cache: 'no-store' }),
+    ]);
 
-  if (!brief) throw new Error('Brief not available');
+    const brief = briefRes.ok ? await briefRes.json().then((j: any) => j.data ?? j) : null;
+    const warnings = warningsRes.ok ? await warningsRes.json().then((j: any) => j.data ?? j) : [];
+    const playbook = playbookRes.ok ? await playbookRes.json().then((j: any) => j.data ?? j) : null;
+    const activity = activityRes.ok ? await activityRes.json().then((j: any) => j.data ?? j) : null;
+    const crm = crmRes.ok ? await crmRes.json().then((j: any) => j.data ?? j) : null;
 
-  // Map rep endpoint data to manager DealDetail format
-  const detail: DealDetail = {
-    dealId,
-    company: '',
-    aiSummary: brief.aiSummary || '',
-    weeklyChange: brief.whatChangedThisWeek || '',
-    buyerSentiment: brief.buyerSentiment || 'Neutral',
-    lastInteraction: brief.lastInteraction || '',
-    keyRisks: brief.keyRisks || '',
-    activeWarnings: Array.isArray(warnings) ? warnings.map((w: any) => w.title || w.description || '') : [],
-    playbookCompletion: playbook?.scorePercentage ?? 0,
-    meddic: Array.isArray(playbook?.criteria)
-      ? playbook.criteria.map((c: any) => ({
-          label: c.criterionName || '',
-          status: c.status || 'Pending',
-          question: c.question || '',
-          answer: c.notes || '',
-          note: c.aiSuggestedNote || undefined,
-        }))
-      : [],
-    nextSteps: [playbook?.criteria?.find((c: any) => c.status === 'Pending')?.aiSuggestedNote || ''].filter(Boolean),
-    activity: {
-      interactionCount: activity?.ourInteractions ?? 0,
-      customerInteractionCount: activity?.customerInteractions ?? 0,
-      totalTime: `${Math.round(activity?.totalMinutes ?? 0)}min`,
-      timeline: [],
-      details: Array.isArray(activity?.events)
-        ? activity.events.map((e: any) => ({
-            title: e.notes || 'Activity',
-            subtitle: e.type || '',
-            type: e.direction === 'inbound' ? 'customer' : 'our',
-            duration: `${e.duration || 0}min`,
-            date: e.date || '',
-            direction: e.direction || 'outbound',
-            participants: e.participants || [],
+    if (!brief) throw new Error('Brief not available');
+
+    // Map rep endpoint data to manager DealDetail format
+    const detail: DealDetail = {
+      dealId,
+      company: '',
+      aiSummary: brief.aiSummary || '',
+      weeklyChange: brief.whatChangedThisWeek || '',
+      buyerSentiment: brief.buyerSentiment || 'Neutral',
+      lastInteraction: brief.lastInteraction || '',
+      keyRisks: brief.keyRisks || '',
+      activeWarnings: Array.isArray(warnings) ? warnings.map((w: any) => w.title || w.description || '') : [],
+      playbookCompletion: playbook?.scorePercentage ?? 0,
+      meddic: Array.isArray(playbook?.criteria)
+        ? playbook.criteria.map((c: any) => ({
+            label: c.criterionName || '',
+            status: c.status || 'Pending',
+            question: c.question || '',
+            answer: c.notes || '',
+            note: c.aiSuggestedNote || undefined,
           }))
         : [],
-    },
-    crm: {
-      forecastCategory: (crm?.forecastCategory || 'Open') as any,
-      nextStep: crm?.nextStep || '',
-    },
-  };
+      nextSteps: [playbook?.criteria?.find((c: any) => c.status === 'Pending')?.aiSuggestedNote || ''].filter(Boolean),
+      activity: {
+        interactionCount: activity?.ourInteractions ?? 0,
+        customerInteractionCount: activity?.customerInteractions ?? 0,
+        totalTime: `${Math.round(activity?.totalMinutes ?? 0)}min`,
+        timeline: [],
+        details: Array.isArray(activity?.events)
+          ? activity.events.map((e: any) => ({
+              title: e.notes || 'Activity',
+              subtitle: e.type || '',
+              type: e.direction === 'inbound' ? 'customer' : 'our',
+              duration: `${e.duration || 0}min`,
+              date: e.date || '',
+              direction: e.direction || 'outbound',
+              participants: e.participants || [],
+            }))
+          : [],
+      },
+      crm: {
+        forecastCategory: (crm?.forecastCategory || 'Open') as any,
+        nextStep: crm?.nextStep || '',
+      },
+    };
 
-  return detail;
+    return detail;
+  } catch (error) {
+    console.warn('Using mock deal detail because the backend request failed.', error);
+    return fallbackDetail;
+  }
 }
 
 export async function postDealComment(
