@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Param, Query, Logger, Body } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Param, Query, Logger, Body } from '@nestjs/common';
 import { PrismaService } from '../../m01-capture-transcription/database/prisma.service';
 import { HubSpotService } from '../services/hubspot.service';
 import { DealsService } from '../services/deals.service';
@@ -1131,6 +1131,49 @@ export class DealsController {
     return {
       success: true,
       data: { notifications: [], unreadCount: 0 },
+      isMock: false,
+    };
+  }
+
+  // ─── In-memory deal comments (fallback until DB table is migrated) ───
+  private dealComments: Record<string, Array<{ id: string; comment: string; createdAt: string }>> = {};
+
+  @Post(':dealId/comments')
+  async postDealComment(
+    @Param('dealId') dealId: string,
+    @Body() body: { comment?: string }
+  ): Promise<ApiResponse<any>> {
+    const commentText = body?.comment?.trim();
+    if (!commentText) {
+      return { success: false, data: null, isMock: false, error: 'Comment text is required' };
+    }
+
+    const entry = {
+      id: `comment-${Date.now()}`,
+      comment: commentText,
+      createdAt: new Date().toISOString(),
+    };
+
+    if (!this.dealComments[dealId]) {
+      this.dealComments[dealId] = [];
+    }
+    this.dealComments[dealId].push(entry);
+
+    this.logger.log(`[COMMENT] Added comment for deal ${dealId}`);
+
+    return {
+      success: true,
+      data: entry,
+      isMock: false,
+    };
+  }
+
+  @Get(':dealId/comments')
+  async getDealComments(@Param('dealId') dealId: string): Promise<ApiResponse<any[]>> {
+    const comments = this.dealComments[dealId] || [];
+    return {
+      success: true,
+      data: comments,
       isMock: false,
     };
   }

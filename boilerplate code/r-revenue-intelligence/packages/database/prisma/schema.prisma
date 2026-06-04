@@ -95,6 +95,17 @@ model Deal {
   @@schema("public")
 }
 
+model DealComment {
+  id             String   @id @default(cuid())
+  dealExternalId String
+  comment        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([dealExternalId])
+  @@schema("public")
+}
+
 model Call {
   id             String   @id @default(cuid())
   tenantId       String
