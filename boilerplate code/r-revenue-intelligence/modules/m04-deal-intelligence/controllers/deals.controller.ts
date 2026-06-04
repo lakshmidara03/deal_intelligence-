@@ -517,14 +517,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn('Failed to fetch from HubSpot, using mock data:', error?.message || error);
-      
-      // Fallback to mock data
-      const mockBoards = this.dealsService.getMockDealBoards();
+      this.logger.error('Failed to fetch from HubSpot:', error?.message || error);
       return {
-        success: true,
-        data: mockBoards,
-        isMock: true,
+        success: false,
+        data: [],
+        isMock: false,
         error: error?.message || 'HubSpot API failed',
       };
     }
@@ -554,14 +551,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn('Failed to fetch board detail from HubSpot, using mock:', error?.message || error);
-      
-      // Fallback to mock
-      const mockDetail = this.dealsService.getMockBoardDetail(boardId);
+      this.logger.error('Failed to fetch board detail from HubSpot:', error?.message || error);
       return {
-        success: true,
-        data: mockDetail,
-        isMock: true,
+        success: false,
+        data: null,
+        isMock: false,
         error: error?.message || 'HubSpot API failed',
       };
     }
@@ -587,14 +581,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn('Failed to fetch deals from HubSpot, using mock:', error?.message || error);
-      
-      // Fallback to mock
-      const mockDeals = this.dealsService.getMockDeals(boardId);
+      this.logger.error('Failed to fetch deals from HubSpot:', error?.message || error);
       return {
-        success: true,
-        data: mockDeals,
-        isMock: true,
+        success: false,
+        data: [],
+        isMock: false,
         error: error?.message || 'HubSpot API failed',
       };
     }
@@ -615,15 +606,12 @@ export class DealsController {
         count: enrichedDeals.length,
       };
     } catch (error: any) {
-      this.logger.warn('Failed to fetch all deals from HubSpot, using mock:', error?.message || error);
-      
-      // Fallback to mock
-      const mockDeals = this.dealsService.getAllMockDeals();
+      this.logger.error('Failed to fetch all deals from HubSpot:', error?.message || error);
       return {
-        success: true,
-        data: mockDeals,
-        isMock: true,
-        count: mockDeals.length,
+        success: false,
+        data: [],
+        isMock: false,
+        count: 0,
         error: error?.message || 'HubSpot API failed',
       };
     }
@@ -665,20 +653,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn('Failed to fetch pipeline summary, using mock:', error?.message || error);
-      
-      // Fallback to mock
+      this.logger.error('Failed to fetch pipeline summary from HubSpot:', error?.message || error);
       return {
-        success: true,
-        data: [
-          { label: 'Open', amount: '$0.9M', count: 2, change: '$8.4K [0]' },
-          { label: 'Commit', amount: '$3.8M', count: 2, change: '$17.5K [0]' },
-          { label: 'Most Likely', amount: '$1.6M', count: 2, change: '$12.2K [0]' },
-          { label: 'Best Case', amount: '$2.1M', count: 1, change: '$8.4K [0]' },
-          { label: 'Closed Won', amount: '$0', count: 0, change: '$0 [0]' },
-          { label: 'Closed Lost', amount: '$0.3M', count: 1, change: '$2.1K [0]' },
-        ],
-        isMock: true,
+        success: false,
+        data: [],
+        isMock: false,
         error: error?.message || 'HubSpot API failed',
       };
     }
@@ -701,14 +680,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn(`Failed to fetch deal ${dealId} from HubSpot, using mock:`, error?.message || error);
-
-      // Fallback to mock
-      const mockDeal = this.dealsService.getMockDealById(dealId);
+      this.logger.error(`Failed to fetch deal ${dealId} from HubSpot:`, error?.message || error);
       return {
-        success: true,
-        data: mockDeal,
-        isMock: true,
+        success: false,
+        data: null,
+        isMock: false,
         error: error?.message || 'HubSpot API failed',
       };
     }
@@ -738,13 +714,10 @@ export class DealsController {
       };
     } catch (error: any) {
       this.logger.error(`Failed to update deal ${dealId} in HubSpot:`, error?.message || error);
-
-      // For now, return success even if HubSpot fails (local update already happened)
-      // In production, you might want to return an error
       return {
-        success: true,
-        data: { ...updates, dealId },
-        isMock: true,
+        success: false,
+        data: null,
+        isMock: false,
         error: error?.message || 'HubSpot API update failed',
       };
     }
@@ -760,12 +733,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn('Failed to fetch pipelines from HubSpot:', error?.message || error);
-      
+      this.logger.error('Failed to fetch pipelines from HubSpot:', error?.message || error);
       return {
-        success: true,
-        data: ['default', 'sales'],
-        isMock: true,
+        success: false,
+        data: [],
+        isMock: false,
         error: error?.message || 'HubSpot API failed',
       };
     }
@@ -855,15 +827,9 @@ export class DealsController {
     } catch (error: any) {
       this.logger.warn(`Failed to fetch brief for deal ${dealId}:`, error?.message || error);
       return {
-        success: true,
-        data: {
-          aiSummary: `Deal ${dealId} summary unavailable.`,
-          whatChangedThisWeek: 'No changes recorded.',
-          buyerSentiment: 'Neutral',
-          lastInteraction: 'No recent activity',
-          keyRisks: 'Data unavailable',
-        },
-        isMock: true,
+        success: false,
+        data: null,
+        isMock: false,
         error: error?.message || 'Failed',
       };
     }
@@ -956,11 +922,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn(`Failed to fetch warnings for deal ${dealId}:`, error?.message || error);
+      this.logger.error(`Failed to fetch warnings for deal ${dealId}:`, error?.message || error);
       return {
-        success: true,
+        success: false,
         data: [],
-        isMock: true,
+        isMock: false,
         error: error?.message || 'Failed',
       };
     }
@@ -1051,17 +1017,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn(`Failed to fetch playbook for deal ${dealId}:`, error?.message || error);
+      this.logger.error(`Failed to fetch playbook for deal ${dealId}:`, error?.message || error);
       return {
-        success: true,
-        data: {
-          framework: 'MEDDIC',
-          scorePercentage: 0,
-          completedCount: 0,
-          totalCount: 6,
-          criteria: [],
-        },
-        isMock: true,
+        success: false,
+        data: null,
+        isMock: false,
         error: error?.message || 'Failed',
       };
     }
@@ -1088,11 +1048,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn(`Failed to fetch activity for deal ${dealId}:`, error?.message || error);
+      this.logger.error(`Failed to fetch activity for deal ${dealId}:`, error?.message || error);
       return {
-        success: true,
-        data: { ourInteractions: 0, customerInteractions: 0, totalMinutes: 0, events: [] },
-        isMock: true,
+        success: false,
+        data: null,
+        isMock: false,
         error: error?.message || 'Failed',
       };
     }
@@ -1116,11 +1076,11 @@ export class DealsController {
         isMock: false,
       };
     } catch (error: any) {
-      this.logger.warn(`Failed to fetch CRM fields for deal ${dealId}:`, error?.message || error);
+      this.logger.error(`Failed to fetch CRM fields for deal ${dealId}:`, error?.message || error);
       return {
-        success: true,
-        data: { stage: '', amount: 0, forecastCategory: '', nextStep: '', closeDate: '' },
-        isMock: true,
+        success: false,
+        data: null,
+        isMock: false,
         error: error?.message || 'Failed',
       };
     }
