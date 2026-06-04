@@ -10,7 +10,7 @@ type View = 'list' | 'detail' | 'manager'
 type Role = 'manager' | 'rep' | null
 
 const REP_NAMES = [
-  'Lakshmi Prasanna',
+  'Lakshmi Prasanna Dara',
   'Revenue Intelligence Demo',
 ] as const;
 

@@ -125,7 +125,7 @@ export async function getDeals(
         ...deal,
         id: deal.id || deal.dealId || '',
         name: deal.name || deal.dealName || 'Unknown Deal',
-        assignedRep: deal.ownerName || deal.assignedRep || 'Lakshmi Prasanna',
+        assignedRep: deal.ownerName || deal.assignedRep || 'Lakshmi Prasanna Dara',
         assignedRepEmail: deal.ownerEmail || deal.assignedRepEmail,
       }));
       return { data: mapped, isMock: json.isMock || false };
