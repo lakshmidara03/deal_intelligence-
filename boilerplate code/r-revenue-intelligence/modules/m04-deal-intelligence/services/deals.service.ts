@@ -78,8 +78,8 @@ export class DealsService {
     };
   }
 
-  getMockDeals(boardId: string): TransformedDeal[] {
-    const baseDeals: TransformedDeal[] = [
+  getMockDeals(boardId: string): any[] {
+    const baseDeals: any[] = [
       {
         dealId: 'deal-1',
         dealName: 'Acme Corp - Enterprise License',
@@ -89,14 +89,12 @@ export class DealsService {
         closeDate: '2026-06-15',
         createDate: '2026-03-01',
         ownerId: '1',
-        ownerName: 'John Smith',
+        ownerName: 'Lakshmi Prasanna',
+        assignedRep: 'Lakshmi Prasanna',
         forecastCategory: 'Commit',
         probability: 80,
         dealType: 'New Business',
-        contacts: [
-          { contactId: 'c1', name: 'Jane Doe', email: 'jane@acme.com', phone: '+1-555-0101' },
-          { contactId: 'c2', name: 'Bob Wilson', email: 'bob@acme.com', phone: '+1-555-0102' },
-        ],
+        contacts: 2,
         aiScore: 85,
         warnings: 0,
         meddpiccScore: 78,
@@ -116,9 +114,7 @@ export class DealsService {
         forecastCategory: 'Most Likely',
         probability: 60,
         dealType: 'New Business',
-        contacts: [
-          { contactId: 'c3', name: 'Alice Johnson', email: 'alice@techstart.com', phone: '+1-555-0103' },
-        ],
+        contacts: 1,
         aiScore: 72,
         warnings: 1,
         meddpiccScore: 65,
@@ -133,15 +129,12 @@ export class DealsService {
         closeDate: '2026-05-20',
         createDate: '2026-01-10',
         ownerId: '2',
-        ownerName: 'Sarah Chen',
+        ownerName: 'Unassigned',
+        assignedRep: 'Unassigned',
         forecastCategory: 'Closed',
         probability: 100,
         dealType: 'Renewal',
-        contacts: [
-          { contactId: 'c4', name: 'David Brown', email: 'david@globalsolutions.com', phone: '+1-555-0104' },
-          { contactId: 'c5', name: 'Emily Davis', email: 'emily@globalsolutions.com', phone: '+1-555-0105' },
-          { contactId: 'c6', name: 'Frank Miller', email: 'frank@globalsolutions.com', phone: '+1-555-0106' },
-        ],
+        contacts: 3,
         aiScore: 95,
         warnings: 0,
         meddpiccScore: 92,
@@ -155,14 +148,13 @@ export class DealsService {
         pipeline: 'default',
         closeDate: '',
         createDate: '2026-05-01',
-        ownerId: '1',
-        ownerName: 'John Smith',
+        ownerId: '2',
+        ownerName: 'Unassigned',
+        assignedRep: 'Unassigned',
         forecastCategory: 'Pipeline',
         probability: 20,
         dealType: 'New Business',
-        contacts: [
-          { contactId: 'c7', name: 'Sarah Wilson', email: 'sarah@midmarket.com', phone: '+1-555-0107' },
-        ],
+        contacts: 1,
         aiScore: 45,
         warnings: 2,
         meddpiccScore: 40,
@@ -176,15 +168,13 @@ export class DealsService {
         pipeline: 'sales',
         closeDate: '2026-06-30',
         createDate: '2026-02-20',
-        ownerId: '2',
-        ownerName: 'Sarah Chen',
+        ownerId: '3',
+        ownerName: 'Revenue Intelligence Demo',
+        assignedRep: 'Revenue Intelligence Demo',
         forecastCategory: 'Commit',
         probability: 75,
         dealType: 'New Business',
-        contacts: [
-          { contactId: 'c8', name: 'Michael Rodriguez', email: 'michael@nwhealth.com', phone: '+1-555-0108' },
-          { contactId: 'c9', name: 'Lisa Garcia', email: 'lisa@nwhealth.com', phone: '+1-555-0109' },
-        ],
+        contacts: 2,
         aiScore: 78,
         warnings: 1,
         meddpiccScore: 70,
@@ -199,15 +189,12 @@ export class DealsService {
         closeDate: '2026-07-15',
         createDate: '2026-03-20',
         ownerId: '3',
-        ownerName: 'Michael Rodriguez',
+        ownerName: 'Revenue Intelligence Demo',
+        assignedRep: 'Revenue Intelligence Demo',
         forecastCategory: 'Most Likely',
         probability: 65,
         dealType: 'Expansion',
-        contacts: [
-          { contactId: 'c10', name: 'Tom Anderson', email: 'tom@betasoft.com', phone: '+1-555-0110' },
-          { contactId: 'c11', name: 'Jennifer Lee', email: 'jen@betasoft.com', phone: '+1-555-0111' },
-          { contactId: 'c12', name: 'Chris Taylor', email: 'chris@betasoft.com', phone: '+1-555-0112' },
-        ],
+        contacts: 3,
         aiScore: 82,
         warnings: 0,
         meddpiccScore: 75,
@@ -224,11 +211,11 @@ export class DealsService {
     return baseDeals;
   }
 
-  getAllMockDeals(): TransformedDeal[] {
+  getAllMockDeals(): any[] {
     return this.getMockDeals('all');
   }
 
-  getMockDealById(dealId: string): TransformedDeal | null {
+  getMockDealById(dealId: string): any | null {
     const allDeals = this.getAllMockDeals();
     return allDeals.find(d => d.dealId === dealId) || allDeals[0] || null;
   }

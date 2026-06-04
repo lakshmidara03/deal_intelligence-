@@ -551,6 +551,20 @@ export class DealsController {
         boardDeals = boardDeals.filter(d => d.ownerName === owner);
       }
 
+      // If owner is specified but no real deals found, fall back to mock data
+      if (owner && boardDeals.length === 0) {
+        this.logger.warn(`No real HubSpot deals for owner "${owner}", using mock fallback.`);
+        const mockDetail = this.dealsService.getMockBoardDetail(boardId);
+        if (mockDetail.deals) {
+          mockDetail.deals = mockDetail.deals.filter((d: any) => d.ownerName === owner);
+        }
+        return {
+          success: true,
+          data: mockDetail,
+          isMock: true,
+        };
+      }
+
       return {
         success: true,
         data: {
@@ -594,6 +608,18 @@ export class DealsController {
       // Filter by owner/rep name if specified
       if (owner) {
         boardDeals = boardDeals.filter(d => d.ownerName === owner);
+      }
+
+      // If owner is specified but no real deals found, fall back to mock data
+      if (owner && boardDeals.length === 0) {
+        this.logger.warn(`No real HubSpot deals for owner "${owner}", using mock fallback.`);
+        let mockDeals = this.dealsService.getMockDeals(boardId);
+        mockDeals = mockDeals.filter(d => d.ownerName === owner);
+        return {
+          success: true,
+          data: mockDeals,
+          isMock: true,
+        };
       }
 
       return {
