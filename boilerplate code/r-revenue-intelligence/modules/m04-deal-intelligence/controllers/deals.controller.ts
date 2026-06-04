@@ -1181,7 +1181,9 @@ export class DealsController {
   @Get('notifications')
   async getNotifications(@Query('repName') repName?: string): Promise<ApiResponse<any>> {
     const filtered = repName
-      ? this.notificationsStore.filter(n => n.repName === repName)
+      ? this.notificationsStore.filter(n =>
+          n.repName?.toLowerCase().includes(repName.toLowerCase())
+        )
       : this.notificationsStore;
 
     const notifications = filtered.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
@@ -1224,7 +1226,7 @@ export class DealsController {
   @Patch('notifications/read-all')
   async markAllNotificationsRead(@Query('repName') repName?: string): Promise<ApiResponse<any>> {
     for (const n of this.notificationsStore) {
-      if (!repName || n.repName === repName) {
+      if (!repName || n.repName?.toLowerCase().includes(repName.toLowerCase())) {
         n.read = true;
       }
     }

@@ -123,6 +123,8 @@ export async function getDeals(
     if (json.success) {
       const mapped = (json.data || []).map((deal: any) => ({
         ...deal,
+        id: deal.id || deal.dealId || '',
+        name: deal.name || deal.dealName || 'Unknown Deal',
         assignedRep: deal.ownerName || deal.assignedRep || 'Lakshmi Prasanna',
         assignedRepEmail: deal.ownerEmail || deal.assignedRepEmail,
       }));

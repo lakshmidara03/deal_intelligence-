@@ -81,7 +81,9 @@ export class DealsService {
   getMockDeals(boardId: string): any[] {
     const baseDeals: any[] = [
       {
+        id: 'deal-1',
         dealId: 'deal-1',
+        name: 'Acme Corp - Enterprise License',
         dealName: 'Acme Corp - Enterprise License',
         amount: 125000,
         stage: 'Contract Sent',
@@ -101,7 +103,9 @@ export class DealsService {
         lastActivity: '2026-05-28',
       },
       {
+        id: 'deal-2',
         dealId: 'deal-2',
+        name: 'TechStart Inc - Pilot Program',
         dealName: 'TechStart Inc - Pilot Program',
         amount: 45000,
         stage: 'Presentation Scheduled',
@@ -121,7 +125,9 @@ export class DealsService {
         lastActivity: '2026-05-25',
       },
       {
+        id: 'deal-3',
         dealId: 'deal-3',
+        name: 'Global Solutions Ltd - Renewal',
         dealName: 'Global Solutions Ltd - Renewal',
         amount: 280000,
         stage: 'Closed Won',
@@ -141,7 +147,9 @@ export class DealsService {
         lastActivity: '2026-05-20',
       },
       {
+        id: 'deal-4',
         dealId: 'deal-4',
+        name: 'MidMarket Co - Standard Package',
         dealName: 'MidMarket Co - Standard Package',
         amount: 60000,
         stage: 'Discovery',
@@ -161,7 +169,9 @@ export class DealsService {
         lastActivity: '2026-05-26',
       },
       {
+        id: 'deal-5',
         dealId: 'deal-5',
+        name: 'Northwest Health - Analytics Suite',
         dealName: 'Northwest Health - Analytics Suite',
         amount: 115000,
         stage: 'Proposal',
@@ -181,7 +191,9 @@ export class DealsService {
         lastActivity: '2026-05-27',
       },
       {
+        id: 'deal-6',
         dealId: 'deal-6',
+        name: 'BetaSoft - Expansion Deal',
         dealName: 'BetaSoft - Expansion Deal',
         amount: 320000,
         stage: 'Decision Maker Bought-In',

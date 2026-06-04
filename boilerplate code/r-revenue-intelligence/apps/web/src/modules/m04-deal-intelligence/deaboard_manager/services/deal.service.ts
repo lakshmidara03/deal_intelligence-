@@ -35,6 +35,8 @@ export async function fetchDeals(): Promise<Deal[]> {
 
     return data.map((deal: any) => ({
       ...deal,
+      id: deal.id || deal.dealId || '',
+      name: deal.name || deal.dealName || 'Unknown Deal',
       amount: deal.amountDisplay || deal.amount,
       owner: {
         name: deal.ownerName || deal.owner?.name || 'Lakshmi Prasanna',

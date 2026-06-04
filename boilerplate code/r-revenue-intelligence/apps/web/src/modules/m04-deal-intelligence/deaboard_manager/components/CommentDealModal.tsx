@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import type { Deal } from '../types/deal.types';
@@ -14,7 +14,12 @@ interface CommentDealModalProps {
 export default function CommentDealModal({ deal, onClose, onPost }: CommentDealModalProps) {
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const canPost = comment.trim().length > 0;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handlePost = async () => {
     if (!canPost || submitting) return;
@@ -23,6 +28,8 @@ export default function CommentDealModal({ deal, onClose, onPost }: CommentDealM
     await onPost(comment.trim());
     setSubmitting(false);
   };
+
+  if (!mounted) return null;
 
   const modal = (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center">
