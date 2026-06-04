@@ -546,9 +546,11 @@ export class DealsController {
       // Get deals for this board's pipeline
       let boardDeals = enrichedDeals.filter(d => d.pipeline === board.pipeline);
 
-      // Filter by owner/rep name if specified
+      // Filter by owner/rep name if specified (loose match for partial names)
       if (owner) {
-        boardDeals = boardDeals.filter(d => d.ownerName === owner);
+        boardDeals = boardDeals.filter(d =>
+          d.ownerName?.toLowerCase().includes(owner.toLowerCase())
+        );
       }
 
       // If owner is specified but no real deals found, fall back to mock data
@@ -556,7 +558,9 @@ export class DealsController {
         this.logger.warn(`No real HubSpot deals for owner "${owner}", using mock fallback.`);
         const mockDetail = this.dealsService.getMockBoardDetail(boardId);
         if (mockDetail.deals) {
-          mockDetail.deals = mockDetail.deals.filter((d: any) => d.ownerName === owner);
+          mockDetail.deals = mockDetail.deals.filter((d: any) =>
+            d.ownerName?.toLowerCase().includes(owner.toLowerCase())
+          );
         }
         return {
           success: true,
@@ -605,16 +609,20 @@ export class DealsController {
 
       let boardDeals = enrichedDeals.filter(d => d.pipeline === board.pipeline);
 
-      // Filter by owner/rep name if specified
+      // Filter by owner/rep name if specified (loose match for partial names)
       if (owner) {
-        boardDeals = boardDeals.filter(d => d.ownerName === owner);
+        boardDeals = boardDeals.filter(d =>
+          d.ownerName?.toLowerCase().includes(owner.toLowerCase())
+        );
       }
 
       // If owner is specified but no real deals found, fall back to mock data
       if (owner && boardDeals.length === 0) {
         this.logger.warn(`No real HubSpot deals for owner "${owner}", using mock fallback.`);
         let mockDeals = this.dealsService.getMockDeals(boardId);
-        mockDeals = mockDeals.filter(d => d.ownerName === owner);
+        mockDeals = mockDeals.filter(d =>
+          d.ownerName?.toLowerCase().includes(owner.toLowerCase())
+        );
         return {
           success: true,
           data: mockDeals,
@@ -631,7 +639,9 @@ export class DealsController {
       this.logger.warn('Failed to fetch deals from HubSpot, using mock:', error?.message || error);
       let mockDeals = this.dealsService.getMockDeals(boardId);
       if (owner) {
-        mockDeals = mockDeals.filter(d => d.ownerName === owner);
+        mockDeals = mockDeals.filter(d =>
+          d.ownerName?.toLowerCase().includes(owner.toLowerCase())
+        );
       }
       return {
         success: true,

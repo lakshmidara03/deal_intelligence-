@@ -133,7 +133,9 @@ export async function getDeals(
     console.warn('[getDeals] Backend failed, using mock:', err);
     let fallback = MOCK_DEALS[boardId] ?? MOCK_DEALS["board-1"];
     if (owner) {
-      fallback = fallback.filter((d: any) => d.assignedRep === owner);
+      fallback = fallback.filter((d: any) =>
+        d.assignedRep?.toLowerCase().includes(owner.toLowerCase())
+      );
     }
     return { data: fallback, isMock: true };
   }
