@@ -1,15 +1,13 @@
 import type { DealDetail } from '../types/deal.types';
 
 interface ActivityChartProps {
-  data: number[];
-  color?: string;
+  data?: number[];
 }
 
-export default function ActivityChart({ data, color = '#3B82F6' }: ActivityChartProps) {
-  // Handle undefined or non-array data
-  const safeData = Array.isArray(data) ? data : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+export default function ActivityChart({ data }: ActivityChartProps) {
+  const safeData = Array.isArray(data) ? data : [];
 
-  // Generate 7 bars with varying heights and colors (matching Figma design)
+  // Generate 7 bars with varying heights and colors (matching Figma / rep view)
   const barCount = 7;
   const barColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16'];
   const total = safeData.reduce((sum, v) => sum + v, 0);
@@ -17,20 +15,16 @@ export default function ActivityChart({ data, color = '#3B82F6' }: ActivityChart
   const bars = Array.from({ length: barCount }, (_, i) => {
     const seed = total + i * 13;
     const heightPercent = 30 + ((seed * 7) % 71); // 30-100%
-    return { heightPercent, color: barColors[i % barColors.length] };
+    const color = barColors[i % barColors.length];
+    return { heightPercent, color };
   });
 
   return (
-    <div className="flex items-end gap-[3px] h-5 px-1" style={{ height: '20px' }}>
+    <div style={{ display: 'flex', gap: 3, alignItems: 'flex-end', height: 20, width: 'fit-content' }}>
       {bars.map((bar, i) => (
         <div
           key={i}
-          className="w-[4px] rounded-full transition-all hover:scale-y-110"
-          style={{
-            height: `${(bar.heightPercent * 20) / 100}px`,
-            backgroundColor: bar.color,
-            opacity: 0.85,
-          }}
+          style={{ width: 4, height: `${bar.heightPercent}%`, background: bar.color, borderRadius: 2, opacity: 0.85 }}
         />
       ))}
     </div>
