@@ -77,7 +77,7 @@ export default function NotificationsPanel({ notifications, unreadCount, onMarkA
             </div>
           </div>
           <div style={{ maxHeight: 320, overflowY: 'auto' }}>
-            {notifications.map(n => (
+            {notifications?.map(n => (
               <div key={n.id} style={{
                 padding: '12px 16px',
                 borderBottom: '1px solid #f3f4f6',
