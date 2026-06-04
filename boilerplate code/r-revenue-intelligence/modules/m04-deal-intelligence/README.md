@@ -1,131 +1,228 @@
-# Dealboards Backend
+# M04 Deal Intelligence Module - HubSpot Integration
 
-NestJS + PostgreSQL backend for the Dealboards CRM platform, including the **Deal Drivers** (m04-deal-intelligence) feature.
-
-## Quick Start
-
-### 1. Prerequisites
-- Node.js 20+
-- Docker & Docker Compose (or a running PostgreSQL 14+ instance)
-
-### 2. Environment
-
-```bash
-cp .env.example .env
-# Edit .env with your DATABASE_URL, JWT_SECRET, etc.
-```
-
-### 3. Database
-
-```bash
-# Option A: Docker (recommended)
-docker-compose up -d postgres
-
-# Option B: Run migrations manually against your own Postgres
-npm run db:migrate
-```
-
-### 4. Install & Start
-
-```bash
-npm install
-npm run start:dev        # dev with hot-reload
-# or
-npm run build && npm start   # production
-```
-
-### 5. Seed Deal Drivers test data
-
-```bash
-npm run db:seed
-```
-
----
+This module provides HubSpot CRM integration for fetching real deal data.
 
 ## Architecture
 
 ```
-src/
-├── main.ts                     # Bootstrap, CORS, validation pipe
-├── app.module.ts               # Root module wiring all feature modules
-├── health.controller.ts        # GET /health
-├── logger.ts                   # Pino logger config
-├── common/
-│   └── audit-sanitize.interceptor.ts
-└── modules/
-    ├── database/               # Global DatabaseService (pg Pool wrapper)
-    ├── auth/                   # JWT auth, JwtAuthGuard, Roles decorator
-    ├── users/                  # User management
-    ├── boards/                 # Deal board CRUD
-    ├── deals/                  # Deal CRUD & lifecycle
-    ├── activities/             # Call/email/meeting activities
-    ├── warnings/               # Deal warning engine
-    ├── next-steps/             # Next step tracking
-    ├── comments/               # Deal comments
-    ├── tasks/                  # Task management
-    ├── teams/                  # Team management
-    ├── targets/                # Sales targets
-    ├── escalations/            # Deal escalations
-    ├── playbook/               # Sales playbooks
-    ├── ai/                     # AI/LLM integration
-    ├── crm-sync/               # CRM webhook sync
-    ├── dataset-upload/         # Bulk data import
-    ├── export/                 # Data export
-    ├── notifications/          # In-app notifications
-    ├── audit/                  # Audit log service
-    └── deal-drivers/           # ★ Deal Drivers feature (m04)
+┌─────────────────────────────────────────────────────────────┐
+│                    Frontend (dealboards_rep)                 │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  dealBoardsService.ts → Calls Backend API            │  │
+│  │  ↓ Fallback to mock data if backend fails            │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ↓ HTTP API
+┌─────────────────────────────────────────────────────────────┐
+│              Backend (m04-deal-intelligence)               │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  DealsController ← HTTP endpoints                    │  │
+│  │  ↓                                                   │  │
+│  │  HubSpotService ← Calls HubSpot API                  │  │
+│  │  ↓ Fallback to DealsService (mock) if HubSpot fails │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ↓ HTTPS
+┌─────────────────────────────────────────────────────────────┐
+│                    HubSpot CRM API                          │
+│         (api.hubapi.com/crm/v3)                            │
+│         Token: (set via HUBSPOT_ACCESS_TOKEN env var)        │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-## Deal Drivers API (m04-deal-intelligence)
+## Created Files
 
-All endpoints require `Authorization: Bearer <token>` with role `sales_manager`, `cro`, `revops`, or `admin`.
+### Backend (Module)
+- `m04-deal-intelligence.module.ts` - NestJS module definition
+- `package.json` - Module dependencies
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/deal-drivers/matrix` | Team warning matrix |
-| GET | `/deal-drivers/drill-down` | Deals behind a matrix cell |
-| GET | `/deal-drivers/board-comparison` | Side-by-side board risk comparison |
-| GET | `/deal-drivers/coaching` | Coaching effectiveness (last 30d vs now) |
-| GET | `/deal-drivers/boards` | Boards accessible to user |
-| GET | `/deal-drivers/managers` | All managers (for CRO selector) |
-| GET | `/deal-drivers/warning-definitions` | Warning catalog |
-| GET | `/deal-drivers/board-warning-config/:boardId` | Warnings enabled on a board |
-| PATCH | `/deal-drivers/board-warning-config/:boardId/warning/:warningId` | Toggle warning |
-| POST | `/deal-drivers/board-warning-config/:boardId/warning` | Add warning to board |
-| POST | `/deal-drivers/webhook/warning-event` | Ingest warning event (HMAC-signed) |
-| POST | `/deal-drivers/webhook/deal-lifecycle/open` | Open deal lifecycle |
-| POST | `/deal-drivers/webhook/deal-lifecycle/close` | Close deal lifecycle |
-| POST | `/deal-drivers/webhook/deal-reassignment` | Record reassignment |
-| POST | `/deal-drivers/webhook/warning-events/bulk` | Bulk ingest warning events |
-| DELETE | `/deal-drivers/cache` | Invalidate matrix cache |
+### Services
+- `services/hubspot.service.ts` - HubSpot API integration
+  - `getAllDeals()` - Fetch all deals from HubSpot
+  - `getDealById()` - Fetch single deal
+  - `getPipelines()` - Get available pipelines
+  - `generateDealBoardsFromDeals()` - Transform deals to boards
+  - Transforms HubSpot data to our format with AI scores, warnings, MEDDPICC
 
-## Database Migrations
+- `services/deals.service.ts` - Mock data fallback
+  - Provides mock boards and deals when HubSpot API fails
 
-Migrations run in filename order:
+### Controller
+- `controllers/deals.controller.ts` - REST API endpoints
+  - `GET /api/deals/boards` - List all deal boards
+  - `GET /api/deals/boards/:boardId` - Get board details
+  - `GET /api/deals/boards/:boardId/deals` - Get deals for board
+  - `GET /api/deals/all` - Get all deals
+  - `GET /api/deals/:dealId` - Get single deal
+  - `GET /api/deals/pipelines/list` - Get pipelines
 
-| File | Contents |
-|------|----------|
-| `001_core_schema.sql` | users, boards, deals, activities, next_steps, comments, tasks, teams, targets, escalations, notifications, playbooks, crm_sync_log |
-| `002_warnings_and_ai.sql` | deal_warnings, ai_call_log, dataset_uploads |
-| `007_deal_drivers.sql` | deal_warning_definitions, board_warning_config, deal_lifecycle, deal_reassignments, deal_warning_events, user_last_used_board |
-| `008_audit_logs.sql` | audit_logs |
+### Types
+- `interfaces/hubspot.types.ts` - TypeScript interfaces for HubSpot data
+
+## API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/deals/boards` | GET | Get all deal boards (grouped by pipeline) |
+| `/api/deals/boards/:id` | GET | Get board details with deals |
+| `/api/deals/boards/:id/deals` | GET | Get deals for specific board |
+| `/api/deals/all` | GET | Get all deals from HubSpot |
+| `/api/deals/:dealId` | GET | Get specific deal by ID |
+| `/api/deals/pipelines/list` | GET | List available pipelines |
+
+## Response Format
+
+All endpoints return:
+```json
+{
+  "success": true,
+  "data": [...],
+  "isMock": false,
+  "error": null  // only present if using mock fallback
+}
+```
+
+## Data Flow
+
+1. **Frontend** calls backend API (`dealBoardsService.ts`)
+2. **Backend** tries to fetch from HubSpot
+3. If HubSpot succeeds → Returns real data with `isMock: false`
+4. If HubSpot fails → Returns mock data with `isMock: true`
+5. **Frontend** displays data (can show badge if `isMock: true`)
 
 ## Environment Variables
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `DATABASE_URL` | — | PostgreSQL connection string |
-| `JWT_SECRET` | `changeme-secret` | JWT signing secret |
-| `JWT_EXPIRES_IN` | `8h` | Token lifetime |
-| `WEBHOOK_SECRET` | — | HMAC secret for webhook guard |
-| `PORT` | `3000` | HTTP port |
-| `NODE_ENV` | `development` | Environment |
-| `LOG_LEVEL` | `info` | Pino log level |
-| `ALLOWED_ORIGINS` | `http://localhost:3001` | CORS origins (comma-separated) |
+The HubSpot token is hardcoded in `hubspot.service.ts`:
+```typescript
+this.accessToken = this.configService.get<string>('HUBSPOT_ACCESS_TOKEN') || '';
+```
 
-## Tests
+To use environment variable instead:
+```bash
+HUBSPOT_ACCESS_TOKEN=your_token_here
+```
+
+## Running the System
+
+### 1. Start the Backend
+
+The backend should be started as part of the main NestJS application:
 
 ```bash
-npm test           # Unit tests (deal-drivers.spec.ts)
-npm run test:e2e   # E2E tests (deal-drivers.e2e.spec.ts)
+cd r-revenue-intelligence-monorepo/boilerplate code/r-revenue-intelligence
+npm run start:dev
 ```
+
+The module will be available at `http://localhost:3000/api/deals/...`
+
+### 2. Start the Frontend
+
+```bash
+cd r-revenue-intelligence-monorepo/boilerplate code/r-revenue-intelligence/apps/web/src/modules/m04-deal-intelligence/dealboards_rep
+npm run dev
+```
+
+Frontend runs at `http://localhost:5176`
+
+### 3. CORS Configuration
+
+If frontend can't connect to backend due to CORS, add to backend main.ts:
+
+```typescript
+app.enableCors({
+  origin: 'http://localhost:5176',
+  credentials: true,
+});
+```
+
+## Fallback Behavior
+
+Both layers have fallback mechanisms:
+
+### Backend Fallback
+- If HubSpot API fails (network error, invalid token, rate limit)
+- Controller catches error and returns mock data from `DealsService`
+- Response includes `"isMock": true` and error message
+
+### Frontend Fallback  
+- If backend is not running or returns error
+- Frontend service catches error and returns local mock data
+- Console shows warning: "[getDealBoards] Backend failed, using mock"
+
+## Features
+
+### AI Score Calculation
+Calculated based on:
+- Deal amount (higher = better)
+- Probability percentage
+- Has close date (more likely to close)
+
+### Warnings Detection
+Flags deals with:
+- No close date set
+- Low probability (< 30%)
+- High amount with low probability
+- Missing deal name
+
+### MEDDPICC Score
+Calculated based on:
+- Metrics (has amount): 15 points
+- Economic Buyer (owner assigned): 15 points
+- Decision Criteria (has stage): 10 points
+- Decision Process (has probability): 10 points
+- Identify Pain (meaningful name): 15 points
+- Champion (has contacts): 15 points
+- Competition (has close date): 10 points
+
+## Testing
+
+### Check if HubSpot connection works:
+```bash
+curl https://api.hubapi.com/crm/v3/objects/deals?limit=10 \
+  -H "Authorization: Bearer $HUBSPOT_ACCESS_TOKEN"
+```
+
+### Check backend API:
+```bash
+curl http://localhost:3000/api/deals/boards
+```
+
+### Expected Response
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "boardId": "1",
+      "name": "Sales Pipeline",
+      "description": "Deals in Sales Pipeline pipeline",
+      "owner": "...",
+      "dealCount": 5,
+      "totalAmount": 500000
+    }
+  ],
+  "isMock": false
+}
+```
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| "Cannot find module @nestjs/common" | Run `npm install` in module directory |
+| "Backend failed, using mock" | Check if backend is running on port 3000 |
+| "HubSpot API error" | Check if token is valid and not expired |
+| CORS errors | Enable CORS in backend main.ts |
+| No deals showing | Check HubSpot account has deals in the CRM |
+
+## HubSpot Token Security
+
+⚠️ **Important**: The HubSpot token has access to your CRM data. 
+
+For production:
+1. Move token to environment variables
+2. Rotate tokens regularly
+3. Use least-privilege scopes
+4. Monitor API usage

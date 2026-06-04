@@ -493,6 +493,7 @@ model CallRecord {
   @@index([tenantId])
   @@index([tenantId, callDate])
   @@index([tenantId, transcriptStatus])
+  @@index([tenantId, opportunityId])
   @@map("call_records")
   @@schema("public")
 }
@@ -1852,5 +1853,40 @@ model ManagerCoachingRep {
 
   @@index([tenantId])
   @@map("manager_coaching_reps")
+  @@schema("public")
+}
+
+// ─────────────────────────────────────────────────────────────
+// M-04: Deal Intelligence
+// ─────────────────────────────────────────────────────────────
+
+/// MEDDPICC analysis result stored for a deal
+model DealMeddpicc {
+  id                String   @id @default(cuid())
+  tenantId          String
+  dealExternalId    String   // HubSpot / CRM deal ID for direct lookup
+
+  // Overall score (0-100)
+  score             Int      @default(0)
+
+  // Category answers — best evidence sentence for each MEDDPICC element
+  metrics           String?
+  economicBuyer     String?
+  decisionCriteria  String?
+  decisionProcess   String?
+  identifyPain      String?
+  champion          String?
+
+  // Derived data
+  matchedCategories String[] @default([])
+  contactCount      Int      @default(0)
+  aiNextStep        String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([tenantId])
+  @@index([dealExternalId])
+  @@map("deal_meddpicc")
   @@schema("public")
 }
