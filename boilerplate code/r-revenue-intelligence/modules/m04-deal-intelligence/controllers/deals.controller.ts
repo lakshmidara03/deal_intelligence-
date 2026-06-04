@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Param, Query, Logger, Body } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Query, Logger, Body } from '@nestjs/common';
 import { PrismaService } from '../../m01-capture-transcription/database/prisma.service';
 import { HubSpotService } from '../services/hubspot.service';
 import { DealsService } from '../services/deals.service';
@@ -1275,6 +1275,40 @@ export class DealsController {
     return {
       success: true,
       data: comments,
+      isMock: false,
+    };
+  }
+
+  // ─── In-memory deal escalation tracking ───
+  private escalatedDeals: Set<string> = new Set();
+
+  @Post(':dealId/escalation')
+  async escalateDeal(@Param('dealId') dealId: string): Promise<ApiResponse<any>> {
+    this.escalatedDeals.add(dealId);
+    this.logger.log(`[ESCALATION] Deal ${dealId} escalated`);
+    return {
+      success: true,
+      data: { dealId, escalated: true },
+      isMock: false,
+    };
+  }
+
+  @Delete(':dealId/escalation')
+  async removeEscalation(@Param('dealId') dealId: string): Promise<ApiResponse<any>> {
+    this.escalatedDeals.delete(dealId);
+    this.logger.log(`[ESCALATION] Deal ${dealId} escalation removed`);
+    return {
+      success: true,
+      data: { dealId, escalated: false },
+      isMock: false,
+    };
+  }
+
+  @Get(':dealId/escalation')
+  async getEscalationStatus(@Param('dealId') dealId: string): Promise<ApiResponse<any>> {
+    return {
+      success: true,
+      data: { dealId, escalated: this.escalatedDeals.has(dealId) },
       isMock: false,
     };
   }
