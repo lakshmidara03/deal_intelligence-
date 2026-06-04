@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { LayoutGrid, Users, BarChart3, Settings, ChevronDown, ChevronRight, UserCircle } from 'lucide-react'
 import DealBoardsList from './rep/DealBoardsList'
 import DealBoardDetail from './rep/DealBoardDetail'
@@ -9,18 +9,28 @@ import './index.css'
 type View = 'list' | 'detail' | 'manager'
 type Role = 'manager' | 'rep' | null
 
-function Sidebar({ 
-  expandedMenu, 
-  setExpandedMenu, 
-  selectedRole, 
+const REP_NAMES = [
+  'Lakshmi Prasanna',
+  'Unassigned',
+  'Revenue Intelligence Demo',
+] as const;
+
+function Sidebar({
+  expandedMenu,
+  setExpandedMenu,
+  selectedRole,
   setSelectedRole,
+  selectedRep,
+  setSelectedRep,
   currentView,
-  setCurrentView 
-}: { 
+  setCurrentView
+}: {
   expandedMenu: string | null
   setExpandedMenu: (menu: string | null) => void
   selectedRole: Role
   setSelectedRole: (role: Role) => void
+  selectedRep: string | null
+  setSelectedRep: (rep: string | null) => void
   currentView: View
   setCurrentView: (view: View) => void
 }) {
@@ -44,8 +54,9 @@ function Sidebar({
     }
   }
 
-  const handleRoleSelect = (role: Role) => {
+  const handleRoleSelect = (role: Role, repName?: string) => {
     setSelectedRole(role)
+    setSelectedRep(repName || null)
     if (role === 'manager') {
       setCurrentView('manager')
     } else if (role === 'rep') {
@@ -130,25 +141,32 @@ function Sidebar({
                     <UserCircle size={14} />
                     <span>Login as Manager</span>
                   </button>
-                  <button
-                    onClick={() => handleRoleSelect('rep')}
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 8,
-                      padding: '8px 16px',
-                      borderRadius: 6,
-                      border: 'none',
-                      background: selectedRole === 'rep' ? 'rgba(79, 70, 229, 0.3)' : 'transparent',
-                      color: selectedRole === 'rep' ? '#fff' : 'rgba(255,255,255,0.5)',
-                      fontSize: 13,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <UserCircle size={14} />
-                    <span>Login as Rep</span>
-                  </button>
+                  <div style={{ padding: '4px 0', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 4, marginBottom: 4 }}>
+                    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', paddingLeft: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Reps</span>
+                  </div>
+                  {REP_NAMES.map((name) => (
+                    <button
+                      key={name}
+                      onClick={() => handleRoleSelect('rep', name)}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        padding: '8px 16px',
+                        borderRadius: 6,
+                        border: 'none',
+                        background: selectedRole === 'rep' && selectedRep === name ? 'rgba(79, 70, 229, 0.3)' : 'transparent',
+                        color: selectedRole === 'rep' && selectedRep === name ? '#fff' : 'rgba(255,255,255,0.5)',
+                        fontSize: 13,
+                        cursor: 'pointer',
+                        marginBottom: 4,
+                      }}
+                    >
+                      <UserCircle size={14} />
+                      <span>{name}</span>
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -163,6 +181,7 @@ function App() {
   const [currentView, setCurrentView] = useState<View>('list')
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null)
   const [selectedRole, setSelectedRole] = useState<Role>(null)
+  const [selectedRep, setSelectedRep] = useState<string | null>(null)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   return (
@@ -195,19 +214,21 @@ function App() {
 
       {/* Sidebar */}
       {!sidebarCollapsed && (
-        <Sidebar 
+        <Sidebar
           expandedMenu={expandedMenu}
           setExpandedMenu={setExpandedMenu}
           selectedRole={selectedRole}
           setSelectedRole={setSelectedRole}
+          selectedRep={selectedRep}
+          setSelectedRep={setSelectedRep}
           currentView={currentView}
           setCurrentView={setCurrentView}
         />
       )}
-      
+
       {/* Main Content - Scrollable */}
-      <main style={{ 
-        flex: 1, 
+      <main style={{
+        flex: 1,
         marginLeft: sidebarCollapsed ? 0 : 260,
         background: '#f8f8fa',
         minHeight: '100vh',
@@ -218,10 +239,10 @@ function App() {
       }}>
         <div style={{ minHeight: '100%', padding: '20px', paddingBottom: 40 }}>
           {currentView === 'list' && (
-            <DealBoardsList onBoardClick={() => setCurrentView('detail')} />
+            <DealBoardsList onBoardClick={() => setCurrentView('detail')} repName={selectedRep} />
           )}
           {currentView === 'detail' && (
-            <DealBoardDetail onBack={() => setCurrentView('list')} />
+            <DealBoardDetail onBack={() => setCurrentView('list')} repName={selectedRep} />
           )}
           {currentView === 'manager' && <DealBoardsManagerView />}
         </div>

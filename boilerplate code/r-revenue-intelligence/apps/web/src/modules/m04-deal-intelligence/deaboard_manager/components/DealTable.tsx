@@ -1,7 +1,62 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { AlertTriangle, Eye, Flag, MessageSquare, MoreVertical } from 'lucide-react';
 import type { Deal, DealDetail } from '../types/deal.types';
 import ActivityChart, { ActivityOverTimeChart } from './ActivityChart';
+
+function ActivityHoverCell({ data, detail }: { data?: number[]; detail?: DealDetail }) {
+  const [show, setShow] = useState(false);
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
+  const [mounted, setMounted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      setCoords({ top: rect.top, left: rect.left + rect.width / 2 });
+    }
+    setShow(true);
+  };
+
+  return (
+    <>
+      <div
+        ref={ref}
+        style={{ cursor: 'pointer', width: 'fit-content' }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => setShow(false)}
+      >
+        <ActivityChart data={data} />
+      </div>
+
+      {mounted && show && detail && createPortal(
+        <div
+          style={{
+            position: 'fixed',
+            bottom: window.innerHeight - coords.top + 10,
+            left: coords.left,
+            transform: 'translateX(-50%)',
+            width: 400,
+            background: '#fff',
+            border: '1px solid #e8eaed',
+            borderRadius: 12,
+            boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+            zIndex: 999999,
+            padding: 20,
+            pointerEvents: 'none',
+          }}
+        >
+          <ActivityOverTimeChart detail={detail} />
+        </div>,
+        document.body
+      )}
+    </>
+  );
+}
 
 interface DealTableProps {
   deals: Deal[];
@@ -123,13 +178,8 @@ function DealRow({
         </span>
       </td>
       {/* Activity */}
-      <td className="px-5 py-5 relative group" style={{ width: 80 }} onClick={(event) => event.stopPropagation()}>
-        <ActivityChart data={deal.activityData} />
-        {detail && (
-          <div className="pointer-events-none absolute right-4 bottom-10 z-50 hidden w-[420px] rounded-xl border border-gray-200 bg-white p-5 shadow-2xl group-hover:block transition-all duration-200">
-            <ActivityOverTimeChart detail={detail} />
-          </div>
-        )}
+      <td className="px-5 py-5" style={{ width: 80 }} onClick={(event) => event.stopPropagation()}>
+        <ActivityHoverCell data={deal.activityData} detail={detail} />
       </td>
       {/* Action Menu (Vertical ellipsis like Figma) */}
       <td className="px-5 py-5 text-center relative" style={{ width: 50 }} onClick={(event) => event.stopPropagation()}>

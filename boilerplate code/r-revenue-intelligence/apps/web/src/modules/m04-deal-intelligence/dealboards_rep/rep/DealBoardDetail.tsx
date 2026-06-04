@@ -25,6 +25,7 @@ import type { DealEvaluationResult } from '../../deaboard_manager/types/ai-evalu
 
 interface DealBoardDetailProps {
   onBack?: () => void;
+  repName?: string | null;
 }
 
 // Helper to parse deal amounts (handles numbers, strings with $/K/M, commas)
@@ -37,7 +38,7 @@ function parseAmount(value: any): number {
   return parseFloat(str) || 0;
 }
 
-export default function DealBoardDetail({ onBack }: DealBoardDetailProps) {
+export default function DealBoardDetail({ onBack, repName }: DealBoardDetailProps) {
   const params = useParams()
   const router = useRouter()
   const boardId = params.boardId as string
@@ -119,10 +120,16 @@ export default function DealBoardDetail({ onBack }: DealBoardDetailProps) {
       ]);
 
       // Evaluate deals with AI engine before setting state
-      const evaluatedDeals = await evaluateDeals(d.data);
-      const repName = evaluatedDeals[0]?.assignedRep;
+      let evaluatedDeals = await evaluateDeals(d.data);
 
-      const n = await getNotifications(repName);
+      // Filter deals by rep name if specified
+      if (repName) {
+        evaluatedDeals = evaluatedDeals.filter(
+          (deal) => deal.assignedRep === repName
+        );
+      }
+
+      const n = await getNotifications(repName || undefined);
 
       setBoard(b.data);
       setDeals(evaluatedDeals);
@@ -131,7 +138,7 @@ export default function DealBoardDetail({ onBack }: DealBoardDetailProps) {
     };
 
     loadData();
-  }, [boardId]);
+  }, [boardId, repName]);
 
   // Evaluate deal with AI engine when selected
   useEffect(() => {
@@ -211,8 +218,7 @@ export default function DealBoardDetail({ onBack }: DealBoardDetailProps) {
   }, [deals, filters, selectedCard])
 
   const handleMarkAllRead = async () => {
-    const repName = deals[0]?.assignedRep;
-    await markAllNotificationsRead(repName)
+    await markAllNotificationsRead(repName || undefined)
     setNotifs(prev => ({
       ...prev, unreadCount: 0,
       notifications: prev.notifications.map(n => ({ ...n, read: true })),

@@ -8,9 +8,10 @@ import type { DealBoard, NotificationsResponse } from '../types/deal-boards.type
 
 interface DealBoardsListProps {
   onBoardClick?: () => void;
+  repName?: string | null;
 }
 
-export default function DealBoardsList({ onBoardClick }: DealBoardsListProps) {
+export default function DealBoardsList({ onBoardClick, repName }: DealBoardsListProps) {
   const [boards, setBoards] = useState<DealBoard[]>([])
   const [notifs, setNotifs] = useState<NotificationsResponse>({ notifications: [], unreadCount: 0 })
   const [loading, setLoading] = useState(true)
@@ -18,16 +19,16 @@ export default function DealBoardsList({ onBoardClick }: DealBoardsListProps) {
   useEffect(() => {
     Promise.all([
       getDealBoards(),
-      getNotifications(),
+      getNotifications(repName || undefined),
     ]).then(([b, n]) => {
       setBoards(b.data)
       setNotifs(n.data)
       setLoading(false)
     })
-  }, [])
+  }, [repName])
 
   const handleMarkAllRead = async () => {
-    await markAllNotificationsRead()
+    await markAllNotificationsRead(repName || undefined)
     setNotifs(prev => ({
       ...prev,
       unreadCount: 0,
