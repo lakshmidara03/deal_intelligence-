@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import type { Deal } from '../types/deal.types';
 
@@ -23,8 +24,8 @@ export default function CommentDealModal({ deal, onClose, onPost }: CommentDealM
     setSubmitting(false);
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+  const modal = (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center">
       <button
         type="button"
         aria-label="Close comment modal"
@@ -35,7 +36,7 @@ export default function CommentDealModal({ deal, onClose, onPost }: CommentDealM
         <div className="mb-6 flex items-start justify-between">
           <div>
             <h2 className="text-xl font-semibold text-gray-900">Add Comment</h2>
-            <p className="mt-5 text-sm text-gray-700">
+            <p className="mt-1 text-sm text-gray-700">
               Deal: <span className="font-medium text-gray-900">{deal.name}</span>
             </p>
           </div>
@@ -52,7 +53,7 @@ export default function CommentDealModal({ deal, onClose, onPost }: CommentDealM
         <textarea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
-          className="min-h-32 w-full resize-none rounded-md border border-blue-300 px-4 py-3 text-sm outline-none focus:border-[#153E91] focus:ring-2 focus:ring-blue-100"
+          className="min-h-[128px] w-full resize-none rounded-md border border-blue-300 px-4 py-3 text-sm outline-none focus:border-[#153E91] focus:ring-2 focus:ring-blue-100"
           placeholder="Add your comment for the sales rep..."
         />
 
@@ -78,4 +79,6 @@ export default function CommentDealModal({ deal, onClose, onPost }: CommentDealM
       </section>
     </div>
   );
+
+  return createPortal(modal, document.body);
 }
