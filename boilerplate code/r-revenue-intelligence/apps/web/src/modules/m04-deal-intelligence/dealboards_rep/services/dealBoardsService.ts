@@ -234,14 +234,17 @@ export function getStageOptions(): Promise<ApiFetchResult<StageOptions>> {
 }
 
 /**
- * GET /api/notifications
+ * GET /api/notifications?repName=...
  * Returns recent notifications and unread count for the bell icon.
  */
-export function getNotifications(): Promise<
+export function getNotifications(repName?: string): Promise<
   ApiFetchResult<NotificationsResponse>
 > {
+  const url = repName
+    ? `/api/notifications?repName=${encodeURIComponent(repName)}`
+    : "/api/notifications";
   return apiFetch<NotificationsResponse>(
-    "/api/notifications",
+    url,
     MOCK_NOTIFICATIONS
   );
 }
@@ -373,16 +376,19 @@ export async function triggerWarningAction(
 }
 
 /**
- * PATCH /api/notifications/read-all
+ * PATCH /api/notifications/read-all?repName=...
  * Marks all notifications as read.
  * Triggered by "Mark All as Read" button.
  */
-export async function markAllNotificationsRead(): Promise<{
+export async function markAllNotificationsRead(repName?: string): Promise<{
   message: string;
   status: string;
 }> {
   try {
-    const res = await fetch(`${BASE_URL}/api/notifications/read-all`, {
+    const url = repName
+      ? `${BASE_URL}/api/notifications/read-all?repName=${encodeURIComponent(repName)}`
+      : `${BASE_URL}/api/notifications/read-all`;
+    const res = await fetch(url, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
     });

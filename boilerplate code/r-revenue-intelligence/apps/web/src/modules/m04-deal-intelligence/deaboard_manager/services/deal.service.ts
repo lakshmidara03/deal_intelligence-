@@ -189,6 +189,20 @@ export async function updateDealEscalation(
   if (!res.ok) throw new Error(`Failed to update deal escalation: ${res.status}`);
 }
 
+export async function createRepNotification(payload: {
+  repName: string;
+  message: string;
+  type?: string;
+}): Promise<void> {
+  const res = await fetch(`${ENV.API_BASE_URL}/api/deals/notifications`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) throw new Error(`Failed to create notification: ${res.status}`);
+}
+
 export async function updateDeal(
   dealId: string,
   updates: {

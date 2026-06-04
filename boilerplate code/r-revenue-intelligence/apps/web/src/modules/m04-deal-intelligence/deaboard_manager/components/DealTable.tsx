@@ -80,16 +80,24 @@ function DealRow({
           {deal.aiScore}%
         </span>
       </td>
-      {/* Warnings */}
+      {/* Warnings + Escalation Flag */}
       <td className="px-5 py-5" style={{ width: 90 }}>
-        {deal.warnings > 0 ? (
-          <div className="inline-flex items-center gap-1">
-            <AlertTriangle size={14} className="text-[#F59E0B] shrink-0" />
-            <span className="text-sm text-gray-700">{deal.warnings}</span>
-          </div>
-        ) : (
-          <span className="text-sm text-gray-400">—</span>
-        )}
+        <div className="inline-flex items-center gap-2">
+          {deal.warnings > 0 ? (
+            <div className="inline-flex items-center gap-1">
+              <AlertTriangle size={14} className="text-[#F59E0B] shrink-0" />
+              <span className="text-sm text-gray-700">{deal.warnings}</span>
+            </div>
+          ) : (
+            <span className="text-sm text-gray-400">—</span>
+          )}
+          {isEscalated && (
+            <div className="inline-flex items-center gap-0.5">
+              <Flag size={14} className="text-red-500 fill-red-500 shrink-0" />
+              <span className="text-xs font-semibold text-red-600">1</span>
+            </div>
+          )}
+        </div>
       </td>
       {/* MEDDPICC % */}
       <td className="px-5 py-5" style={{ width: 140 }}>
@@ -152,7 +160,7 @@ function DealRow({
               className="w-full px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 flex items-center gap-2"
             >
               <Flag size={14} className={isEscalated ? 'text-red-500 fill-red-500' : 'text-gray-400'} />
-              <span>{isEscalated ? 'De-escalate' : 'Escalate'}</span>
+              <span>{isEscalated ? 'Remove Escalation' : 'Escalate'}</span>
             </button>
             <button
               onClick={() => {

@@ -1126,11 +1126,70 @@ export class DealsController {
     }
   }
 
+  // ─── In-memory notifications (fallback until DB table is migrated) ───
+  private notificationsStore: Array<{
+    id: string;
+    repName: string;
+    message: string;
+    type: string;
+    timestamp: string;
+    read: boolean;
+  }> = [];
+
   @Get('notifications')
-  async getNotifications(): Promise<ApiResponse<any>> {
+  async getNotifications(@Query('repName') repName?: string): Promise<ApiResponse<any>> {
+    const filtered = repName
+      ? this.notificationsStore.filter(n => n.repName === repName)
+      : this.notificationsStore;
+
+    const notifications = filtered.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    const unreadCount = notifications.filter(n => !n.read).length;
+
     return {
       success: true,
-      data: { notifications: [], unreadCount: 0 },
+      data: { notifications, unreadCount },
+      isMock: false,
+    };
+  }
+
+  @Post('notifications')
+  async createNotification(
+    @Body() body: { repName: string; message: string; type?: string }
+  ): Promise<ApiResponse<any>> {
+    if (!body?.repName || !body?.message) {
+      return { success: false, data: null, isMock: false, error: 'repName and message are required' };
+    }
+
+    const entry = {
+      id: `notif-${Date.now()}`,
+      repName: body.repName,
+      message: body.message,
+      type: body.type || 'info',
+      timestamp: new Date().toISOString(),
+      read: false,
+    };
+
+    this.notificationsStore.push(entry);
+    this.logger.log(`[NOTIFICATION] Created for rep ${body.repName}: ${body.message}`);
+
+    return {
+      success: true,
+      data: entry,
+      isMock: false,
+    };
+  }
+
+  @Patch('notifications/read-all')
+  async markAllNotificationsRead(@Query('repName') repName?: string): Promise<ApiResponse<any>> {
+    for (const n of this.notificationsStore) {
+      if (!repName || n.repName === repName) {
+        n.read = true;
+      }
+    }
+
+    return {
+      success: true,
+      data: { message: 'All notifications marked as read' },
       isMock: false,
     };
   }

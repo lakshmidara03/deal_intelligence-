@@ -8,6 +8,7 @@ import type { Deal, DealDetail, DealFilterState, DealTaskPayload, DealCategory, 
 import { MOCK_DEAL_DETAILS } from './mocks/deals.mock';
 import {
   createDealTask,
+  createRepNotification,
   exportDealsCsv,
   fetchDealDetail,
   postDealComment,
@@ -392,6 +393,21 @@ export default function DealBoardsManagerView() {
     // Sync to CRM
     try {
       await updateDeal(dealId, { meddpiccPercent });
+
+      // Notify the rep
+      const deal = deals.find((d) => d.id === dealId);
+      if (deal) {
+        try {
+          await createRepNotification({
+            repName: deal.owner.name,
+            message: `MEDDPICC score updated to ${meddpiccPercent}% for deal "${deal.name}"`,
+            type: 'info',
+          });
+        } catch (notifErr) {
+          console.warn('Failed to send MEDDPICC update notification:', notifErr);
+        }
+      }
+
       console.log(`Synced MEDDPICC ${meddpiccPercent}% to CRM for deal ${dealId}`);
     } catch (error) {
       console.error(`Failed to sync MEDDPICC to CRM for deal ${dealId}:`, error);
@@ -461,6 +477,21 @@ export default function DealBoardsManagerView() {
         amount: updates.amount,
         nextStep: updates.nextStep,
       });
+
+      // Notify the rep
+      const deal = deals.find((d) => d.id === dealId);
+      if (deal) {
+        try {
+          await createRepNotification({
+            repName: deal.owner.name,
+            message: `CRM updated for deal "${deal.name}" — stage: ${updates.stage}, category: ${updates.category}`,
+            type: 'activity',
+          });
+        } catch (notifErr) {
+          console.warn('Failed to send CRM update notification:', notifErr);
+        }
+      }
+
       console.log(`Synced CRM updates to CRM for deal ${dealId}:`, updates);
       showToast(`CRM updated for ${selectedDeal?.name || 'deal'}.`);
     } catch (error) {
@@ -483,6 +514,20 @@ export default function DealBoardsManagerView() {
       setEscalatedDealIds((prev) =>
         nextEscalated ? [...prev, deal.id] : prev.filter((dealId) => dealId !== deal.id)
       );
+
+      // Notify the rep
+      try {
+        await createRepNotification({
+          repName: deal.owner.name,
+          message: isEscalated
+            ? `Escalation removed for deal "${deal.name}"`
+            : `Deal "${deal.name}" has been escalated by your manager`,
+          type: isEscalated ? 'info' : 'warning',
+        });
+      } catch (notifErr) {
+        console.warn('Failed to send escalation notification:', notifErr);
+      }
+
       showToast(
         isEscalated
           ? `Escalation removed for ${deal.name}.`
@@ -526,6 +571,20 @@ export default function DealBoardsManagerView() {
         assignee: selectedDeal?.owner.name || 'Manager',
       };
       await createDealTask(payload);
+
+      // Notify the rep
+      if (selectedDeal) {
+        try {
+          await createRepNotification({
+            repName: selectedDeal.owner.name,
+            message: `New task "${task.name}" assigned to you on deal "${selectedDeal.name}"`,
+            type: 'activity',
+          });
+        } catch (notifErr) {
+          console.warn('Failed to send task notification:', notifErr);
+        }
+      }
+
       showToast(`Task "${task.name}" added successfully`);
     } catch (error) {
       console.error('Failed to add manager task:', error);
@@ -538,6 +597,18 @@ export default function DealBoardsManagerView() {
 
     try {
       await postDealComment(commentDeal.id, { comment });
+
+      // Notify the rep
+      try {
+        await createRepNotification({
+          repName: commentDeal.owner.name,
+          message: `New comment on deal "${commentDeal.name}" from your manager`,
+          type: 'info',
+        });
+      } catch (notifErr) {
+        console.warn('Failed to send comment notification:', notifErr);
+      }
+
       setCommentDeal(null);
       showToast('Comment posted successfully.');
     } catch (error) {

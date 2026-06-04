@@ -113,14 +113,16 @@ export default function DealBoardDetail({ onBack }: DealBoardDetailProps) {
 
   useEffect(() => {
     const loadData = async () => {
-      const [b, d, n] = await Promise.all([
+      const [b, d] = await Promise.all([
         getBoardDetail(boardId),
         getDeals(boardId),
-        getNotifications(),
       ]);
 
       // Evaluate deals with AI engine before setting state
       const evaluatedDeals = await evaluateDeals(d.data);
+      const repName = evaluatedDeals[0]?.assignedRep;
+
+      const n = await getNotifications(repName);
 
       setBoard(b.data);
       setDeals(evaluatedDeals);
@@ -209,7 +211,8 @@ export default function DealBoardDetail({ onBack }: DealBoardDetailProps) {
   }, [deals, filters, selectedCard])
 
   const handleMarkAllRead = async () => {
-    await markAllNotificationsRead()
+    const repName = deals[0]?.assignedRep;
+    await markAllNotificationsRead(repName)
     setNotifs(prev => ({
       ...prev, unreadCount: 0,
       notifications: prev.notifications.map(n => ({ ...n, read: true })),
